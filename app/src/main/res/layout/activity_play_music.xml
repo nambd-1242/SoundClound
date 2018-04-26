@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_splash">
+
+    <ImageView
+        android:id="@+id/image_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_splash" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparent">
+
+        <ImageView
+            android:id="@+id/image_song"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_16"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/image_button_download"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_play_pause"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:onClick="onClick"
+            android:src="@drawable/ic_pause_white_48dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/image_play_next"
+            app:layout_constraintStart_toEndOf="@id/image_play_previous" />
+
+        <ImageView
+            android:id="@+id/image_play_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:src="@drawable/ic_skip_next_white_48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toStartOf="@id/image_change_loop_type"
+            app:layout_constraintStart_toEndOf="@id/image_play_pause"
+            app:layout_constraintTop_toTopOf="@+id/image_play_pause" />
+
+        <ImageView
+            android:id="@+id/image_play_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:src="@drawable/ic_skip_previous_white_48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toStartOf="@id/image_play_pause"
+            app:layout_constraintStart_toEndOf="@id/image_shuffle"
+            app:layout_constraintTop_toTopOf="@+id/image_play_pause" />
+
+        <ImageView
+            android:id="@+id/image_shuffle"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:onClick="onClick"
+            android:padding="@dimen/dp_8"
+            android:src="@drawable/ic_shuffle_white_48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toStartOf="@id/image_play_previous"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_play_pause" />
+
+        <ImageView
+            android:id="@+id/image_change_loop_type"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:onClick="onClick"
+            android:padding="@dimen/dp_8"
+            android:src="@drawable/ic_repeat_white_48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_play_next"
+            app:layout_constraintTop_toTopOf="@+id/image_play_pause" />
+
+        <TextView
+            android:id="@+id/text_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:text="@string/msg_00_00"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/image_play_pause"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:progressBackgroundTint="@android:color/white"
+            android:progressTint="@android:color/white"
+            android:thumbTint="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toStartOf="@+id/text_end_time"
+            app:layout_constraintStart_toEndOf="@+id/text_duration" />
+
+        <TextView
+            android:id="@+id/text_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:text="@string/msg_00_00"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_button_download"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_8"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="onClick"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_file_download_white_48dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_duration"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_button_action_description"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="onClick"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_info_white_48dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_end_time"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/image_play_pause"
+            app:layout_constraintEnd_toStartOf="@+id/image_play_next"
+            app:layout_constraintStart_toEndOf="@+id/image_play_previous"
+            app:layout_constraintTop_toBottomOf="@+id/seek_bar" />
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

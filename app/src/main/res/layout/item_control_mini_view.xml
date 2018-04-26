@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_70"
+    android:background="@color/cloud_burst">
+
+    <ImageView
+        android:id="@+id/image_mini_track"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_55"
+        android:layout_marginStart="@dimen/dp_8"
+        android:background="@drawable/ic_splash"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_mini_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/text_mini_artist"
+        app:layout_constraintEnd_toStartOf="@+id/image_action_previous"
+        app:layout_constraintStart_toEndOf="@+id/image_mini_track"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/text_mini_artist"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/grey_chateau"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_action_previous"
+        app:layout_constraintStart_toEndOf="@+id/image_mini_track"
+        app:layout_constraintTop_toBottomOf="@+id/text_mini_title" />
+
+    <ImageView
+        android:id="@+id/image_play_pause"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_0"
+        android:src="@drawable/ic_play_arrow_white_48dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_action_next"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_action_next"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        android:paddingEnd="@dimen/dp_4"
+        android:paddingStart="@dimen/dp_4"
+        android:src="@drawable/ic_skip_next_white_48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_action_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        android:paddingEnd="@dimen/dp_4"
+        android:paddingStart="@dimen/dp_4"
+        android:src="@drawable/ic_skip_previous_white_48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_play_pause"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/image_play_pause"
+        app:layout_constraintEnd_toStartOf="@+id/image_action_next"
+        app:layout_constraintStart_toEndOf="@+id/image_action_previous"
+        app:layout_constraintTop_toTopOf="@+id/image_play_pause" />
+</android.support.constraint.ConstraintLayout>

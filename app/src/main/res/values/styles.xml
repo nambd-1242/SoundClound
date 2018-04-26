@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/MyTextViewStyle</item>
+        <item name="buttonStyle">@style/MyButtonStyle</item>
+    </style>
+
+    <style name="MyTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <!--Splash theme.-->
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash_screen</item>
+        <item name="colorPrimaryDark">@color/cinnabar</item>
+    </style>
+
+    <!--Main View theme.-->
+    <style name="MainScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/cloud_burst</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="android:windowBackground">@color/gainsboro</item>
+        <item name="android:textColorPrimary">@color/colorSecondaryText</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>

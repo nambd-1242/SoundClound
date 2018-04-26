@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">My SoundCloud</string>
+    <string name="msg_hello_world">Hello World!</string>
+    <string name="search_title">Search tracks</string>
+    <string name="music_genres">Music genres</string>
+    <string name="msg_finding_tracks">Finding tracks...</string>
+    <string name="msg_feature_is_coming">Feature is coming...</string>
+    <string name="msg_opps">Opps!</string>
+    <string name="msg_genres">Genres</string>
+    <string name="msg_top_50">Top 50</string>
+    <string name="msg_00_00">00:00</string>
+    <string name="msg_title">Title</string>
+    <string name="msg_artist">Artist</string>
+    <string name="msg_1k">1k</string>
+    <string name="msg_loading">Loading...</string>
+    <string name="title_error">Error</string>
+    <string name="msg_no_internet_connection">No internet connection</string>
+    <string name="title_description">Description</string>
+    <string name="title_next_up">Next up</string>
+    <string name="msg_cant_be_download">Can\'t be downloaded due to copyright issue</string>
+    <string name="msg_permission_denied">Permission denied</string>
+    <string name="msg_downloading">Downloading...</string>
+    <string name="msg_download_failed">Download failed</string>
+    <string name="text_icon">⋮</string>
+    <string name="action_add_to_next_up">Add to Next up</string>
+    <string name="action_download">Download</string>
+    <string name="msg_load_downloaded_failed">Load downloaded tracks failed</string>
+    <string name="msg_0_track">0 track</string>
+    <string name="msg_top">Top</string>
+    <string name="msg_no_song_found">No song found!</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_add_to_playlist">Add to playlist</string>
+    <string name="msg_add_new_playlist">Add new playlist</string>
+    <string name="msg_list_already_exists">The list already exists</string>
+    <string name="msg_added_to_playlist">Added to playlist</string>
+    <string name="msg_no_playlist_found">No playlist found</string>
+    <string name="msg_null_playlist">Null playlist</string>
+    <string name="title_playlist">Playlist</string>
+    <string name="msg_my_playlist">My playlist</string>
+    <string name="msg_0_tracks">0 tracks</string>
+    <string name="msg_no_track_to_add">No track to add</string>
+
+    <string-array name="music_genres">
+        <item>All music</item>
+        <item>All audio</item>
+        <item>Alternative Rock</item>
+        <item>Ambient</item>
+        <item>Classical</item>
+        <item>Country</item>
+    </string-array>
+
+    <string-array name="top_types">
+        <item>Top 10</item>
+        <item>Top 20</item>
+        <item>Top 30</item>
+        <item>Top 40</item>
+        <item>Top 50</item>
+    </string-array>
+
+</resources>
