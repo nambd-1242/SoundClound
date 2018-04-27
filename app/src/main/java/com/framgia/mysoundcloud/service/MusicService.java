@@ -158,33 +158,23 @@ public class MusicService extends Service {
     public void initializeNotification(@PlaybackInfoListener.State int state) {
         if (getCurrentTrack() == null) return;
         initializeBaseNotification();
-        if (state == PlaybackInfoListener.State.PAUSE) {
-
-            stopForeground(false);
-
-            mBuilder.setOngoing(false)
-                    .addAction(R.drawable.ic_skip_previous_black_24dp, TITLE_ACTION_PREVIOUS, prevPendingIntent)   // #0
-                    .addAction(R.drawable.ic_play_arrow_black_36dp, TITLE_ACTION_PLAY, ptPlayPause)    // #1
-                    .addAction(R.drawable.ic_skip_next_black_24dp, TITLE_ACTION_NEXT, nextPendingIntent)  // #2
-                    .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
-                            .setShowActionsInCompactView(ORDER_ACTION_PREVIOUS, ORDER_ACTION_PLAY_PAUSE, ORDER_ACTION_NEXT));
-            if (notificationManager == null) {
-                notificationManager =
-                        (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            notificationManager =
+                    (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        String name = "my_package_channel";
+        String id = "my_package_channel_1";
+        String description = "my_package_first_channel";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = notificationManager.getNotificationChannel(id);
+            if (mChannel == null) {
+                mChannel = new NotificationChannel(id, name, importance);
+                mChannel.setDescription(description);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notificationManager.createNotificationChannel(mChannel);
             }
-            String name = "my_package_channel";
-            String id = "my_package_channel_1";
-            String description = "my_package_first_channel";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-                NotificationChannel mChannel = notificationManager.getNotificationChannel(id);
-                if (mChannel == null) {
-                    mChannel = new NotificationChannel(id, name, importance);
-                    mChannel.setDescription(description);
-                    mChannel.enableVibration(true);
-                    mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                    notificationManager.createNotificationChannel(mChannel);
-                }
 //                mBuilder = new NotificationCompat.Builder(this, id);
 //
 //                builder.setContentTitle(aMessage)  // required
@@ -195,7 +185,18 @@ public class MusicService extends Service {
 //                        .setContentIntent(pendingIntent)
 //                        .setTicker(aMessage)
 //                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            }
+        }
+        if (state == PlaybackInfoListener.State.PAUSE) {
+
+            stopForeground(false);
+
+            mBuilder.setOngoing(false)
+                    .addAction(R.drawable.ic_skip_previous_black_24dp, TITLE_ACTION_PREVIOUS, prevPendingIntent)   // #0
+                    .addAction(R.drawable.ic_play_arrow_black_36dp, TITLE_ACTION_PLAY, ptPlayPause)    // #1
+                    .addAction(R.drawable.ic_skip_next_black_24dp, TITLE_ACTION_NEXT, nextPendingIntent)  // #2
+                    .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
+                            .setShowActionsInCompactView(ORDER_ACTION_PREVIOUS, ORDER_ACTION_PLAY_PAUSE, ORDER_ACTION_NEXT));
+
 //            else {
 //                builder = new NotificationCompat.Builder(this);
 //                builder.setContentTitle(aMessage)                           // required

@@ -38,5 +38,7 @@ public interface MainViewConstract {
         void onAddedToNextUp(Track track);
 
         void onAddToPlaylist(Track track);
+
+        void onAddToFavorite(Track track);
     }
 }

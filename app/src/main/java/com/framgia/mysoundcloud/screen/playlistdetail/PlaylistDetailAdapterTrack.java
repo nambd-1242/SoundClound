@@ -1,4 +1,4 @@
-package com.framgia.mysoundcloud.screen.download;
+package com.framgia.mysoundcloud.screen.playlistdetail;
 
 import android.content.Context;
 import android.view.MenuItem;
@@ -18,14 +18,14 @@ import com.framgia.mysoundcloud.utils.StringUtil;
  * Created by sonng266 on 11/03/2018.
  */
 
-public class DownloadedTracksAdapter
+public class PlaylistDetailAdapterTrack
         extends BaseTrackRecyclerViewAdapter<BaseTrackRecyclerViewAdapter.BaseViewHolder> {
 
     private MainViewConstract.TrackListListener mListener;
-    private DownloadViewContract.DeleteTrackListener mDeleteTrackListener;
+    private PlayListDetailViewContract.DeleteTrackListener mDeleteTrackListener;
 
-    DownloadedTracksAdapter(Context context, MainViewConstract.TrackListListener listener,
-                            DownloadViewContract.DeleteTrackListener deleteTrackListener) {
+    PlaylistDetailAdapterTrack(Context context, MainViewConstract.TrackListListener listener,
+                               PlayListDetailViewContract.DeleteTrackListener deleteTrackListener) {
         super(context);
         mListener = listener;
         mDeleteTrackListener = deleteTrackListener;

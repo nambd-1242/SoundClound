@@ -85,6 +85,7 @@ public class DialogManager implements DialogManagerInterface {
                     @Override
                     public void onHandleFailure(String message) {
                         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
                     }
                 };
 

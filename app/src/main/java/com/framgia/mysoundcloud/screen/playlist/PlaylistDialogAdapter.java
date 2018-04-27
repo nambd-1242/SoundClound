@@ -10,6 +10,7 @@ import com.framgia.mysoundcloud.data.model.Playlist;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class PlaylistDialogAdapter extends RecyclerView.Adapter<PlaylistDialogAd
 
     public PlaylistDialogAdapter(TrackDataSource.OnHandleDatabaseListener listener, Track... tracks) {
         mPlaylists = TrackRepository.getInstance().getPlaylist();
+        for (int i = 0; i <mPlaylists.size() ; i++) {
+            if (mPlaylists.get(i).getName().equals(Constant.TABLE_FAVORITE)) {
+                mPlaylists.remove(i);
+            }
+        }
         mTracks = tracks;
         mListener = listener;
     }

@@ -127,6 +127,11 @@ public class MusicGenresAdapter extends BaseTrackRecyclerViewAdapter<BaseTrackRe
                                     if (mListener == null) return true;
                                     mListener.onAddToPlaylist(mTrack);
                                     return true;
+
+                                case R.id.action_add_farvotie :
+                                    if (mListener == null) return true;
+                                    mListener.onAddToFavorite(mTrack);
+                                    return true;
                                 default:
                                     return false;
                             }

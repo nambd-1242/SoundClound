@@ -3,9 +3,7 @@ package com.framgia.mysoundcloud.data.model;
 
 import java.io.Serializable;
 
-/**
- * Created by Bui Danh Nam on 5/1/2018.
- */
+
 
 public class Genre implements Serializable {
     private int mName;

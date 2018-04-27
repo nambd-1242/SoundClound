@@ -1,8 +1,9 @@
-package com.framgia.mysoundcloud.screen.download;
+package com.framgia.mysoundcloud.screen.playlistdetail;
 
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.List;
  * Created by sonng266 on 09/03/2018.
  */
 
-public class DownloadedTracksPresenter implements DownloadViewContract.Presenter,
+public class PlaylistDetailPresenter implements PlayListDetailViewContract.Presenter,
         TrackDataSource.OnFetchDataListener<Track> {
 
-    private DownloadViewContract.View mView;
+    private PlayListDetailViewContract.View mView;
 
     @Override
-    public void setView(DownloadViewContract.View view) {
+    public void setView(PlayListDetailViewContract.View view) {
         mView = view;
     }
 
@@ -32,8 +33,14 @@ public class DownloadedTracksPresenter implements DownloadViewContract.Presenter
     }
 
     @Override
-    public void loadTrack() {
-        TrackRepository.getInstance().getTracksLocal(this);
+    public void loadTrack(String flag) {
+        if(flag.equals(Constant.FAVORITE)){
+            TrackRepository.getInstance().getTrackbyTable(this ,Constant.TABLE_FAVORITE);
+        }
+        if(flag.equals(Constant.DOWLOAD)){
+            TrackRepository.getInstance().getTracksLocal(this);
+        }
+
     }
 
     @Override

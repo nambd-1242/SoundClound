@@ -3,13 +3,16 @@ package com.framgia.mysoundcloud.data.source.local.config;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
+import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Playlist;
 import com.framgia.mysoundcloud.data.model.PublisherMetadata;
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.ArrayList;
@@ -75,13 +78,14 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_PLAYLIST_ENTRIES);
         db.execSQL(SQL_CREATE_TRACK_ENTRIES);
         db.execSQL(SQL_CREATE_PLAYLIST_HAS_TRACK);
+        insertPlaylist(Constant.TABLE_FAVORITE, db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public void insertTrack(Track track) {
+    public void insertTrack(Track track, TrackDataSource.OnHandleDatabaseListener listener) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Track.TrackEntity.ARTWORK_URL, track.getArtworkUrl());
@@ -97,27 +101,55 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         values.put(Track.TrackEntity.PLAYBACK_COUNT, track.getDownloadCount());
         values.put(Track.TrackEntity.TITLE, track.getTitle());
         values.put(Track.TrackEntity.URI, track.getUri());
-        values.put(Track.TrackEntity.USERNAME, track.getPublisherMetadata().getArtist());
+        if (track.getPublisherMetadata() != null) {
+            values.put(Track.TrackEntity.USERNAME, track.getPublisherMetadata().getArtist());
+        }
         values.put(Track.TrackEntity.LIKES_COUNT, track.getLikesCount());
-        database.insert(PlaylistTrackDbHelper.PlaylistEntry.TABLE_NAME_TRACK, null, values);
-        database.close();
+        try {
+            long a = database.insert(PlaylistTrackDbHelper.PlaylistEntry.TABLE_NAME_TRACK, null, values);
+            if (a > 0)
+                listener.onHandleSuccess("Add to playlist");
+            else {
+                listener.onHandleFailure("This track is exist !!");
+            }
+        } catch (SQLException e) {
+            listener.onHandleFailure(e.getMessage());
+        }
     }
 
-    public void insertPlaylist(String namePlaylist) {
+    public void insertPlaylist(String namePlaylist, TrackDataSource.OnHandleDatabaseListener listener) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, namePlaylist);
-        database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST, null, values);
-        database.close();
+        long index = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST, null, values);
+        if (index > 0)
+            listener.onHandleSuccess("success");
+        else {
+            listener.onHandleFailure("failure");
+        }
     }
 
-    public void insertToTablePlaylistHasTrack(int trackId, int playlistId) {
+    public void insertPlaylist(String namePlaylist, SQLiteDatabase database) {
+        ContentValues values = new ContentValues();
+        values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, namePlaylist);
+        long index = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST, null, values);
+    }
+
+    public void insertToTablePlaylistHasTrack(int trackId, int playlistId, TrackDataSource.OnHandleDatabaseListener listener) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST_ID, playlistId);
         values.put(PlaylistEntry.COLUMN_NAME_TRACK_ID, trackId);
-        database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST_HAS_TRACK, null, values);
-        database.close();
+        try {
+            long a = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST_HAS_TRACK, null, values);
+            if(a > 0)
+            listener.onHandleSuccess("Add to playlist");
+            else {
+                listener.onHandleFailure("This track is exist !!");
+            }
+        } catch (SQLException e) {
+            listener.onHandleFailure(e.getMessage());
+        }
     }
 
     public List<Playlist> getAllPlaylist() {
@@ -163,17 +195,14 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         if (cursor == null) return null;
 
         List<Track> tracks = new ArrayList<>();
-        cursor.moveToFirst();
-        do {
-            Track track = parseTrackFromCusor(cursor);
-            if (track != null) {
-                tracks.add(track);
-            }
-        } while (cursor.moveToNext());
-
-        cursor.close();
-        database.close();
-
+        if (cursor.moveToFirst() && cursor.getCount() > 0) {
+            do {
+                Track track = parseTrackFromCusor(cursor);
+                if (track != null) {
+                    tracks.add(track);
+                }
+            } while (cursor.moveToNext());
+        }
         return tracks;
     }
 

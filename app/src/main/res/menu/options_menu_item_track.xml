@@ -10,7 +10,11 @@
         android:title="@string/action_add_to_playlist" />
 
     <item
+        android:id="@+id/action_add_farvotie"
+        android:title="@string/action_favorite" />
+    <item
         android:id="@+id/action_download"
         android:title="@string/action_download" />
+
 
 </menu>

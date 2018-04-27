@@ -1,4 +1,4 @@
-package com.framgia.mysoundcloud.screen.download;
+package com.framgia.mysoundcloud.screen.playlistdetail;
 
 import android.content.Context;
 import android.view.MenuItem;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.screen.BaseTrackRecyclerViewAdapter;
@@ -14,18 +15,16 @@ import com.framgia.mysoundcloud.screen.main.MainViewConstract;
 import com.framgia.mysoundcloud.utils.StringUtil;
 
 
-/**
- * Created by sonng266 on 11/03/2018.
- */
 
-public class DownloadedTracksAdapterTrack
+
+public class TracksAdapter
         extends BaseTrackRecyclerViewAdapter<BaseTrackRecyclerViewAdapter.BaseViewHolder> {
 
     private MainViewConstract.TrackListListener mListener;
-    private DownloadViewContract.DeleteTrackListener mDeleteTrackListener;
+    private PlayListDetailViewContract.DeleteTrackListener mDeleteTrackListener;
 
-    DownloadedTracksAdapterTrack(Context context, MainViewConstract.TrackListListener listener,
-                                 DownloadViewContract.DeleteTrackListener deleteTrackListener) {
+    TracksAdapter(Context context, MainViewConstract.TrackListListener listener,
+                  PlayListDetailViewContract.DeleteTrackListener deleteTrackListener) {
         super(context);
         mListener = listener;
         mDeleteTrackListener = deleteTrackListener;
@@ -92,6 +91,10 @@ public class DownloadedTracksAdapterTrack
             mTextDuration.setText(StringUtil.parseMilliSecondsToTimer(mTrack.getFullDuration()));
             mTextTitle.setText(mTrack.getTitle());
             mTextArtist.setText(mTrack.getPublisherMetadata().getArtist());
+            Glide.with(mContext)
+                    .load(mTrack.getArtworkUrl())
+                    .placeholder(R.drawable.bg_splash_screen)
+                    .into(mImageTrack);
         }
     }
 }

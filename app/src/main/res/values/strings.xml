@@ -24,6 +24,7 @@
     <string name="text_icon">⋮</string>
     <string name="action_add_to_next_up">Add to Next up</string>
     <string name="action_download">Download</string>
+    <string name="action_favorite">Add Favorite</string>
     <string name="msg_load_downloaded_failed">Load downloaded tracks failed</string>
     <string name="msg_0_track">0 track</string>
     <string name="msg_top">Top</string>
@@ -36,9 +37,11 @@
     <string name="msg_no_playlist_found">No playlist found</string>
     <string name="msg_null_playlist">Null playlist</string>
     <string name="title_playlist">Playlist</string>
+    <string name="title_like">Like</string>
     <string name="msg_my_playlist">My playlist</string>
     <string name="msg_0_tracks">0 tracks</string>
     <string name="msg_no_track_to_add">No track to add</string>
+    <string name="msg_err_name_null">Name is empty</string>
 
     <string-array name="music_genres">
         <item>All music</item>

@@ -1,7 +1,8 @@
-package com.framgia.mysoundcloud.screen.download;
+package com.framgia.mysoundcloud.screen.playlistdetail;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,30 +28,35 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DownloadedTracksFragment extends BaseFragment
-        implements DownloadViewContract.View, View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener, DownloadViewContract.DeleteTrackListener {
+public class PlaylistDetailTracksFragment extends BaseFragment
+        implements PlayListDetailViewContract.View, View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener, PlayListDetailViewContract.DeleteTrackListener {
 
+    private String flag;
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 2;
-    private DownloadViewContract.Presenter mPresenter;
-    private DownloadedTracksAdapter mDownloadedTracksAdapter;
+    private PlayListDetailViewContract.Presenter mPresenter;
+    private TracksAdapter mDownloadedTracksAdapter;
     private TextView mTextNumberTracks;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    public static DownloadedTracksFragment newInstance(
-            MainViewConstract.TrackListListener listListener) {
-        DownloadedTracksFragment downloadedTracksFragment = new DownloadedTracksFragment();
+    public static PlaylistDetailTracksFragment newInstance(
+            MainViewConstract.TrackListListener listListener, String flag) {
+        PlaylistDetailTracksFragment downloadedTracksFragment = new PlaylistDetailTracksFragment();
         downloadedTracksFragment.setArguments(putBundle(listListener));
+        Bundle args = new Bundle();
+        args.putParcelable(Constant.ARGUMENT_TRACK_LIST_LISTENER, listListener);
+        args.putString(Constant.ARGUMENT_FLAG, flag);
+        downloadedTracksFragment.setArguments(args);
         return downloadedTracksFragment;
     }
 
-    public DownloadedTracksFragment() {
+    public PlaylistDetailTracksFragment() {
         // Required empty public constructor
     }
 
     @Override
     protected void initializeUI(View view) {
-        mPresenter = new DownloadedTracksPresenter();
+        mPresenter = new PlaylistDetailPresenter();
         mPresenter.setView(this);
 
         ImageView imagePlayList = view.findViewById(R.id.action_image_play_list);
@@ -60,7 +66,7 @@ public class DownloadedTracksFragment extends BaseFragment
         mTextNumberTracks.setText(R.string.msg_0_track);
 
         mTrackListListener = getArguments().getParcelable(Constant.ARGUMENT_TRACK_LIST_LISTENER);
-
+        flag = getArguments().getString(Constant.ARGUMENT_FLAG);
         setupRecyclerView(view);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
@@ -114,7 +120,7 @@ public class DownloadedTracksFragment extends BaseFragment
             case MY_PERMISSIONS_REQUEST_STORAGE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPresenter.loadTrack();
+                    mPresenter.loadTrack(flag);
                 } else {
                     Toast.makeText(getActivity(), R.string.msg_permission_denied, Toast.LENGTH_SHORT).show();
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -142,7 +148,7 @@ public class DownloadedTracksFragment extends BaseFragment
     @Override
     public void onDeleteClicked(Track track) {
         if (!TrackRepository.getInstance().deleteTrack(track)) return;
-        mPresenter.loadTrack();
+        mPresenter.loadTrack(flag);
     }
 
     private void initializePermissionStorage() {
@@ -155,13 +161,13 @@ public class DownloadedTracksFragment extends BaseFragment
             ActivityCompat.requestPermissions(getActivity(),
                     Constant.PERMISSIONS, MY_PERMISSIONS_REQUEST_STORAGE);
         } else {
-            mPresenter.loadTrack();
+            mPresenter.loadTrack(flag);
         }
     }
 
     private void setupRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        mDownloadedTracksAdapter = new DownloadedTracksAdapter(getContext(),
+        mDownloadedTracksAdapter = new TracksAdapter(getContext(),
                 mTrackListListener, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(

@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.repository.TrackRepository;
+import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.screen.playmusic.PlayMusicActivity;
 import com.framgia.mysoundcloud.screen.search.SearchFragment;
 import com.framgia.mysoundcloud.service.MusicService;
@@ -161,6 +163,12 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
                 updateTitle(getString(R.string.title_playlist));
                 mViewPager.setCurrentItem(2);
                 break;
+            // TODO: 27/04/2018 tab select
+            case 3:
+                updateTitle(getString(R.string.title_like));
+                mViewPager.setCurrentItem(3);
+                break;
+
         }
 
     }
@@ -372,6 +380,22 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
                 public void onAddToPlaylist(Track track) {
                     if (mDialogManager == null) return;
                     mDialogManager.dialogAddToPlaylist(MainActivity.this, track);
+                }
+
+                @Override
+                public void onAddToFavorite(Track track) {
+                    if (mDialogManager == null) return;
+                    TrackRepository.getInstance().addTracksToFavorite(track , new TrackDataSource.OnHandleDatabaseListener() {
+                        @Override
+                        public void onHandleSuccess(String message) {
+
+                        }
+
+                        @Override
+                        public void onHandleFailure(String message) {
+
+                        }
+                    });
                 }
 
                 @Override

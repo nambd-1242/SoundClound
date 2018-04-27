@@ -29,7 +29,13 @@ public interface TrackDataSource {
 
         List<Playlist> getPlaylist();
 
+        void insertPlayList(Playlist playlist, OnHandleDatabaseListener listener);
+
         List<Playlist> getDetailPlaylist();
+
+        void addTracksToFavorite(Track track, OnHandleDatabaseListener listener);
+
+        void getTrackbyTable(OnFetchDataListener<Track> listener, String table);
     }
 
     /**
@@ -40,6 +46,7 @@ public interface TrackDataSource {
                              OnFetchDataListener<Track> listener);
 
         void searchTracksRemote(String trackName, int offSet, OnFetchDataListener<Track> listener);
+
     }
 
     interface OnFetchDataListener<T> {

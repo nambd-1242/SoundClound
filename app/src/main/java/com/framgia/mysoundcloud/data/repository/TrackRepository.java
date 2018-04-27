@@ -8,9 +8,6 @@ import com.framgia.mysoundcloud.data.source.remote.TrackRemoteDataSource;
 
 import java.util.List;
 
-/**
- * Created by sonng266 on 28/02/2018.
- */
 
 public class TrackRepository implements TrackDataSource.RemoteDataSource,
         TrackDataSource.LocalDataSource {
@@ -77,6 +74,18 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
+    public void insertPlayList(Playlist playlist, OnHandleDatabaseListener listener) {
+        if (mTrackLocalDataSource == null) return;
+        mTrackLocalDataSource.insertPlayList(playlist, listener);
+    }
+
+    @Override
+    public void getTrackbyTable(OnFetchDataListener<Track> listener , String table) {
+        if (mTrackLocalDataSource == null) return ;
+         mTrackLocalDataSource.getTrackbyTable(listener,table);
+    }
+
+    @Override
     public List<Playlist> getDetailPlaylist() {
         if (mTrackLocalDataSource == null) return null;
         return mTrackLocalDataSource.getDetailPlaylist();
@@ -95,5 +104,11 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
         if (mTrackRemoteDataSource != null) {
             mTrackRemoteDataSource.searchTracksRemote(trackName, offSet, listener);
         }
+    }
+
+    @Override
+    public void addTracksToFavorite(Track track, OnHandleDatabaseListener listener) {
+        if (mTrackLocalDataSource == null) return;
+        mTrackLocalDataSource.addTracksToFavorite(track, listener);
     }
 }

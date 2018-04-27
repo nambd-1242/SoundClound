@@ -9,6 +9,11 @@ import android.Manifest;
 public final class Constant {
 
     public static final String ERROR_NULL = "data null";
+    public static final String EXTRA_ID_PLAYLIST = "id_playlist";
+    public static final String TABLE_FAVORITE = "tbt_favorite";
+    public static final String DOWLOAD = "dowload";
+    public static final String FAVORITE = "favorite";
+    public static final String ARGUMENT_FLAG = "flag_playlist";
 
     private Constant() {
     }

@@ -2,9 +2,6 @@ package com.framgia.mysoundcloud.data.model;
 
 import java.util.List;
 
-/**
- * Created by sonng266 on 14/03/2018.
- */
 
 public class Playlist {
     private int mId;
