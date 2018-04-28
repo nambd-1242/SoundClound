@@ -24,7 +24,7 @@ public interface TrackDataSource {
         void addTracksToPlaylist(int playlistId,
                                  OnHandleDatabaseListener listener, Track... tracks);
 
-        void addTracksToNewPlaylist(String newPlaylistName,
+        void addTracksToNewPlaylist( int idUser ,String newPlaylistName,
                                     OnHandleDatabaseListener listener, Track... tracks);
 
         List<Playlist> getPlaylist();
@@ -33,9 +33,9 @@ public interface TrackDataSource {
 
         List<Playlist> getDetailPlaylist();
 
-        void addTracksToFavorite(Track track, OnHandleDatabaseListener listener);
+        void addTracksToFavorite(int idUser, Track track, OnHandleDatabaseListener listener);
 
-        void getTrackbyTable(OnFetchDataListener<Track> listener, String table);
+        void getTrackFavorite(int idUser, OnFetchDataListener<Track> listener);
     }
 
     /**

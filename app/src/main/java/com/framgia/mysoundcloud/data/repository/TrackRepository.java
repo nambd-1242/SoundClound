@@ -60,10 +60,10 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
-    public void addTracksToNewPlaylist(String newPlaylistName,
+    public void addTracksToNewPlaylist(int idUser , String newPlaylistName,
                                        OnHandleDatabaseListener listener, Track... tracks) {
         if (mTrackLocalDataSource == null) return;
-        mTrackLocalDataSource.addTracksToNewPlaylist(newPlaylistName, listener, tracks);
+        mTrackLocalDataSource.addTracksToNewPlaylist(  idUser,newPlaylistName, listener, tracks);
     }
 
 
@@ -80,9 +80,9 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
-    public void getTrackbyTable(OnFetchDataListener<Track> listener , String table) {
+    public void getTrackFavorite(int idUser, OnFetchDataListener<Track> listener) {
         if (mTrackLocalDataSource == null) return ;
-         mTrackLocalDataSource.getTrackbyTable(listener,table);
+         mTrackLocalDataSource.getTrackFavorite(idUser, listener);
     }
 
     @Override
@@ -107,8 +107,8 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
-    public void addTracksToFavorite(Track track, OnHandleDatabaseListener listener) {
+    public void addTracksToFavorite(int idUser, Track track, OnHandleDatabaseListener listener) {
         if (mTrackLocalDataSource == null) return;
-        mTrackLocalDataSource.addTracksToFavorite(track, listener);
+        mTrackLocalDataSource.addTracksToFavorite(idUser, track, listener);
     }
 }

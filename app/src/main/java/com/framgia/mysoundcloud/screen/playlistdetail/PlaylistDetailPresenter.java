@@ -3,6 +3,7 @@ package com.framgia.mysoundcloud.screen.playlistdetail;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ public class PlaylistDetailPresenter implements PlayListDetailViewContract.Prese
     @Override
     public void loadTrack(String flag) {
         if(flag.equals(Constant.FAVORITE)){
-            TrackRepository.getInstance().getTrackbyTable(this ,Constant.TABLE_FAVORITE);
+            // TODO: 4/28/2018 idUser
+            int idUser  = SharePreferences.getInstance().getUser().getId();
+            TrackRepository.getInstance().getTrackFavorite(idUser ,this );
         }
         if(flag.equals(Constant.DOWLOAD)){
             TrackRepository.getInstance().getTracksLocal(this);

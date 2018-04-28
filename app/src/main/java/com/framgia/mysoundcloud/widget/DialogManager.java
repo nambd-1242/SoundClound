@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.screen.playlist.PlaylistDialogAdapter;
 
 /**
@@ -94,7 +96,10 @@ public class DialogManager implements DialogManagerInterface {
         imageAddNewPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TrackRepository.getInstance().addTracksToNewPlaylist(
+                User user = SharePreferences.getInstance().getUser();
+                if(user== null)return;
+                int id = user.getId();
+                TrackRepository.getInstance().addTracksToNewPlaylist(id,
                         editTextNewPlaylist.getText().toString(), listener, tracks);
             }
         });

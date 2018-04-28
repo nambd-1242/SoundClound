@@ -27,8 +27,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.screen.playmusic.PlayMusicActivity;
 import com.framgia.mysoundcloud.screen.search.SearchFragment;
 import com.framgia.mysoundcloud.service.MusicService;
@@ -385,7 +387,12 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
                 @Override
                 public void onAddToFavorite(Track track) {
                     if (mDialogManager == null) return;
-                    TrackRepository.getInstance().addTracksToFavorite(track , new TrackDataSource.OnHandleDatabaseListener() {
+                    User user = SharePreferences.getInstance().getUser() ;
+                    if(user == null){
+                        return;
+                    }
+                    int idUser = user.getId();
+                    TrackRepository.getInstance().addTracksToFavorite(idUser,track , new TrackDataSource.OnHandleDatabaseListener() {
                         @Override
                         public void onHandleSuccess(String message) {
 

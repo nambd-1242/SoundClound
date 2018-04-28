@@ -19,12 +19,16 @@ import com.framgia.mysoundcloud.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framgia.mysoundcloud.data.source.local.config.PlaylistTrackDbHelper.PlaylistEntry.COLUMN_NAME_PLAYLIST_ID;
+import static com.framgia.mysoundcloud.data.source.local.config.PlaylistTrackDbHelper.PlaylistEntry.COLUMN_NAME_TRACK_ID;
+import static com.framgia.mysoundcloud.data.source.local.config.PlaylistTrackDbHelper.PlaylistEntry.COLUMN_NAME_USER_ID;
+
 public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_PLAYLIST_ENTRIES = "CREATE TABLE "
             + PlaylistEntry.TABLE_NAME_PLAYLIST
             + " ( "
-            + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_NAME_PLAYLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + PlaylistEntry.COLUMN_NAME_PLAYLIST + " TEXT NOT NULL"
             + " );";
     private static final String SQL_CREATE_USER_ENTRIES = "CREATE TABLE "
@@ -57,11 +61,32 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_PLAYLIST_HAS_TRACK = "CREATE TABLE "
             + PlaylistEntry.TABLE_NAME_PLAYLIST_HAS_TRACK
             + " ( "
-            + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID + " INTEGER NOT NULL,"
+            + COLUMN_NAME_PLAYLIST_ID + " INTEGER NOT NULL,"
             + PlaylistEntry.COLUMN_NAME_TRACK_ID + " INTEGER NOT NULL, "
             + "PRIMARY KEY( "
             + PlaylistEntry.COLUMN_NAME_TRACK_ID + " , "
-            + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID
+            + COLUMN_NAME_PLAYLIST_ID
+            + " ) "
+            + ");";
+
+    private static final String SQL_CREATE_USER_HAS_PLAYLIST = "CREATE TABLE "
+            + PlaylistEntry.TABLE_NAME_USER_HAS_PLAYLIST
+            + " ( "
+            + COLUMN_NAME_PLAYLIST_ID + " INTEGER NOT NULL,"
+            + PlaylistEntry.COLUMN_NAME_USER_ID + " INTEGER NOT NULL, "
+            + "PRIMARY KEY( "
+            + PlaylistEntry.COLUMN_NAME_USER_ID + " , "
+            + COLUMN_NAME_PLAYLIST_ID
+            + " ) "
+            + ");";
+    private static final String SQL_CREATE_FAVORITE = "CREATE TABLE "
+            + PlaylistEntry.TABLE_NAME_FAVORITE
+            + " ( "
+            + COLUMN_NAME_TRACK_ID + " INTEGER NOT NULL,"
+            + PlaylistEntry.COLUMN_NAME_USER_ID + " INTEGER NOT NULL, "
+            + "PRIMARY KEY( "
+            + PlaylistEntry.COLUMN_NAME_USER_ID + " , "
+            + COLUMN_NAME_TRACK_ID
             + " ) "
             + ");";
 
@@ -84,7 +109,9 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_TRACK_ENTRIES);
         db.execSQL(SQL_CREATE_PLAYLIST_HAS_TRACK);
         db.execSQL(SQL_CREATE_USER_ENTRIES);
-        insertPlaylist(Constant.TABLE_FAVORITE, db);
+        db.execSQL(SQL_CREATE_USER_HAS_PLAYLIST);
+        db.execSQL(SQL_CREATE_FAVORITE);
+//        insertPlaylist(Constant.TABLE_FAVORITE, db);
     }
 
     @Override
@@ -129,7 +156,7 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, namePlaylist);
         long index = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST, null, values);
         if (index > 0)
-            listener.onHandleSuccess("success");
+            listener.onHandleSuccess(String.valueOf(index));
         else {
             listener.onHandleFailure("failure");
         }
@@ -144,12 +171,44 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
     public void insertToTablePlaylistHasTrack(int trackId, int playlistId, TrackDataSource.OnHandleDatabaseListener listener) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST_ID, playlistId);
+        values.put(COLUMN_NAME_PLAYLIST_ID, playlistId);
         values.put(PlaylistEntry.COLUMN_NAME_TRACK_ID, trackId);
         try {
             long a = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST_HAS_TRACK, null, values);
             if (a > 0)
                 listener.onHandleSuccess("Add to playlist");
+            else {
+                listener.onHandleFailure("This track is exist !!");
+            }
+        } catch (SQLException e) {
+            listener.onHandleFailure(e.getMessage());
+        }
+    }
+    public void insertToTableUserHasPlayList(int idPlayList, int idUser, TrackDataSource.OnHandleDatabaseListener listener) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_PLAYLIST_ID, idPlayList);
+        values.put(PlaylistEntry.COLUMN_NAME_USER_ID, idUser);
+        try {
+            long a = database.insert(PlaylistEntry.TABLE_NAME_USER_HAS_PLAYLIST, null, values);
+            if (a > 0)
+                listener.onHandleSuccess("Add to playlist");
+            else {
+                listener.onHandleFailure("This track is exist !!");
+            }
+        } catch (SQLException e) {
+            listener.onHandleFailure(e.getMessage());
+        }
+    }
+    public void addTrackFavorite(int idTrack, int idUser, TrackDataSource.OnHandleDatabaseListener listener) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_TRACK_ID, idTrack);
+        values.put(PlaylistEntry.COLUMN_NAME_USER_ID, idUser);
+        try {
+            long a = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST, null, values);
+            if (a > 0)
+                listener.onHandleSuccess("Add to favorite");
             else {
                 listener.onHandleFailure("This track is exist !!");
             }
@@ -170,13 +229,46 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
             playlist.setName(cursor.getString(
                     cursor.getColumnIndexOrThrow(PlaylistEntry.COLUMN_NAME_PLAYLIST)));
             playlist.setId(cursor.getInt(
-                    cursor.getColumnIndexOrThrow(PlaylistEntry.COLUMN_NAME_PLAYLIST_ID)));
+                    cursor.getColumnIndexOrThrow(COLUMN_NAME_PLAYLIST_ID)));
             playlists.add(playlist);
         }
 
         cursor.close();
         database.close();
 
+        return playlists;
+    }
+    public List<Playlist> getPlayListByIdUser(int idUser){
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "
+                        + PlaylistEntry.TABLE_NAME_USER_HAS_PLAYLIST
+                        + " , "
+                        + PlaylistEntry.TABLE_NAME_PLAYLIST
+                        + " WHERE "
+                        + PlaylistEntry.TABLE_NAME_USER_HAS_PLAYLIST + "."
+                        + PlaylistEntry.COLUMN_NAME_USER_ID
+                        + " = "
+                        + idUser
+                        + " AND "
+                        + PlaylistEntry.TABLE_NAME_PLAYLIST + "." + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID
+                        + " = "
+                        + PlaylistEntry.TABLE_NAME_USER_HAS_PLAYLIST + "."
+                        + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID
+                , null);
+
+        if (cursor == null) return null;
+
+        List<Playlist> playlists = new ArrayList<>();
+        if (cursor.moveToFirst() && cursor.getCount() > 0) {
+            do {
+                Playlist playlist = new Playlist();
+                playlist.setName(cursor.getString(
+                        cursor.getColumnIndexOrThrow(PlaylistEntry.COLUMN_NAME_PLAYLIST)));
+                playlist.setId(cursor.getInt(
+                        cursor.getColumnIndexOrThrow(COLUMN_NAME_PLAYLIST_ID)));
+                playlists.add(playlist);
+            } while (cursor.moveToNext());
+        }
         return playlists;
     }
 
@@ -188,7 +280,7 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
                         + PlaylistEntry.TABLE_NAME_TRACK
                         + " WHERE "
                         + PlaylistEntry.TABLE_NAME_PLAYLIST_HAS_TRACK + "."
-                        + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID
+                        + COLUMN_NAME_PLAYLIST_ID
                         + " = "
                         + playlistId
                         + " AND "
@@ -289,6 +381,40 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    public void getTrackFavorite(int idUser, TrackDataSource.OnFetchDataListener<Track> listener) {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "
+                        + PlaylistEntry.TABLE_NAME_FAVORITE
+                        + " , "
+                        + PlaylistEntry.TABLE_NAME_TRACK
+                        + " WHERE "
+                        + PlaylistEntry.TABLE_NAME_FAVORITE + "."
+                        + PlaylistEntry.COLUMN_NAME_USER_ID
+                        + " = "
+                        + idUser
+                        + " AND "
+                        + PlaylistEntry.TABLE_NAME_TRACK + "." + PlaylistEntry.COLUMN_NAME_TRACK_ID
+                        + " = "
+                        + PlaylistEntry.TABLE_NAME_FAVORITE + "."
+                        + PlaylistEntry.COLUMN_NAME_TRACK_ID
+                , null);
+
+        if (cursor == null) {
+            listener.onFetchDataFailure("null");
+        }
+
+        List<Track> tracks = new ArrayList<>();
+        if (cursor.moveToFirst() && cursor.getCount() > 0) {
+            do {
+                Track track = parseTrackFromCusor(cursor);
+                if (track != null) {
+                    tracks.add(track);
+                }
+            } while (cursor.moveToNext());
+        }
+        listener.onFetchDataSuccess(tracks);
+    }
+
     /**
      * Inner class that defines the table playlist contents
      */
@@ -296,8 +422,11 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         public static final String TABLE_NAME_PLAYLIST = "Playlists";
         public static final String TABLE_NAME_TRACK = "Tracks";
         public static final String TABLE_NAME_PLAYLIST_HAS_TRACK = "PlaylistTrack";
+        public static final String TABLE_NAME_USER_HAS_PLAYLIST = "UserPlayList";
+        public static final String TABLE_NAME_FAVORITE = "Favorite";
         public static final String COLUMN_NAME_PLAYLIST = "playlist_name";
         public static final String COLUMN_NAME_PLAYLIST_ID = "playlist_id";
+        public static final String COLUMN_NAME_USER_ID = "user_id";
         public static final String COLUMN_NAME_TRACK_ID = "track_id";
     }
 }
