@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.support.constraint.ConstraintLayout;
@@ -14,7 +15,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.framgia.mysoundcloud.R;
@@ -387,12 +388,12 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
                 @Override
                 public void onAddToFavorite(Track track) {
                     if (mDialogManager == null) return;
-                    User user = SharePreferences.getInstance().getUser() ;
-                    if(user == null){
+                    User user = SharePreferences.getInstance().getUser();
+                    if (user == null) {
                         return;
                     }
                     int idUser = user.getId();
-                    TrackRepository.getInstance().addTracksToFavorite(idUser,track , new TrackDataSource.OnHandleDatabaseListener() {
+                    TrackRepository.getInstance().addTracksToFavorite(idUser, track, new TrackDataSource.OnHandleDatabaseListener() {
                         @Override
                         public void onHandleSuccess(String message) {
 
@@ -400,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
 
                         @Override
                         public void onHandleFailure(String message) {
-
+                            Toast.makeText(mMusicService, message, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

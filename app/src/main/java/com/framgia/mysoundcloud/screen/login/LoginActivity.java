@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
     }
 
     @Override
@@ -79,5 +80,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             presenter.handleSignInResult(task);
         }
     }
-
 }

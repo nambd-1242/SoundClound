@@ -27,7 +27,9 @@ public class UserRemoveDatasource implements UserDataSource.UserRemoveDataSource
             userLocal.setEmail(user.getEmail());
             userLocal.setName(user.getDisplayName());
             userLocal.setToken(user.getIdToken());
-            userLocal.setImage(user.getPhotoUrl().toString());
+            if(user.getPhotoUrl() != null) {
+                userLocal.setImage(user.getPhotoUrl().toString());
+            }
             userLocal.setToken(user.getIdToken());
             callBack.onSuccess(userLocal);
         }

@@ -14,6 +14,7 @@ public final class Constant {
     public static final String DOWLOAD = "dowload";
     public static final String FAVORITE = "favorite";
     public static final String ARGUMENT_FLAG = "flag_playlist";
+    public static final String CLIENT_ID_LOGIN = "2D22hCWbKTLZSk8p6HcsQ8cG";
 
     private Constant() {
     }

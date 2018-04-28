@@ -223,7 +223,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     @Override
     public void addTracksToFavorite(int idUser, Track track, OnHandleDatabaseListener listener) {
         if (mPlaylistTrackDbHelper == null || track == null) return;
-        mPlaylistTrackDbHelper.addTrackFavorite(track.getId(), idUser, listener);
+        mPlaylistTrackDbHelper.addTrackFavorite(track, idUser, listener);
     }
 
     @Override
