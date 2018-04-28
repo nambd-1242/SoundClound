@@ -8,19 +8,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
-import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Playlist;
 import com.framgia.mysoundcloud.data.model.PublisherMetadata;
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.UserDataSource;
 import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by sonng266 on 14/03/2018.
- */
 
 public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
 
@@ -30,7 +27,15 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
             + PlaylistEntry.COLUMN_NAME_PLAYLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + PlaylistEntry.COLUMN_NAME_PLAYLIST + " TEXT NOT NULL"
             + " );";
-
+    private static final String SQL_CREATE_USER_ENTRIES = "CREATE TABLE "
+            + User.UserEntry.TABLE_NAME_USER
+            + " ( "
+            + User.UserEntry.COLUMN_NAME_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + User.UserEntry.COLUMN_NAME_USER + " TEXT ,"
+            + User.UserEntry.COLUMN_EMAIL + " TEXT NOT NULL ,"
+            + User.UserEntry.COLUMN_IMAGE + " TEXT ,"
+            + User.UserEntry.COLUMN_TOKEN + " TEXT "
+            + " );";
     private static final String SQL_CREATE_TRACK_ENTRIES = "CREATE TABLE "
             + PlaylistEntry.TABLE_NAME_TRACK + " ( "
             + Track.TrackEntity.ARTWORK_URL + " TEXT, "
@@ -78,6 +83,7 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_PLAYLIST_ENTRIES);
         db.execSQL(SQL_CREATE_TRACK_ENTRIES);
         db.execSQL(SQL_CREATE_PLAYLIST_HAS_TRACK);
+        db.execSQL(SQL_CREATE_USER_ENTRIES);
         insertPlaylist(Constant.TABLE_FAVORITE, db);
     }
 
@@ -142,8 +148,8 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         values.put(PlaylistEntry.COLUMN_NAME_TRACK_ID, trackId);
         try {
             long a = database.insert(PlaylistEntry.TABLE_NAME_PLAYLIST_HAS_TRACK, null, values);
-            if(a > 0)
-            listener.onHandleSuccess("Add to playlist");
+            if (a > 0)
+                listener.onHandleSuccess("Add to playlist");
             else {
                 listener.onHandleFailure("This track is exist !!");
             }
@@ -231,6 +237,56 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         track.setPublisherMetadata(publisherMetadata);
 
         return track;
+    }
+
+    public void addUser(User user, UserDataSource.ResultCallBack<User> callBack) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(User.UserEntry.COLUMN_NAME_USER, user.getName());
+        values.put(User.UserEntry.COLUMN_EMAIL, user.getEmail());
+        values.put(User.UserEntry.COLUMN_IMAGE, user.getImage());
+        values.put(User.UserEntry.COLUMN_TOKEN, user.getToken());
+        try {
+            long a = database.insert(User.UserEntry.TABLE_NAME_USER, null, values);
+            if (a > 0) {
+                user.setId((int) a);
+                callBack.onSuccess(user);
+            }
+        } catch (SQLException e) {
+            callBack.onFailure(e.getMessage());
+        }
+    }
+
+    public void getUserbyId(int id, UserDataSource.ResultCallBack<User> callBack) {
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor cursor = database.query(User.UserEntry.TABLE_NAME_USER,
+                null,
+                User.UserEntry.COLUMN_NAME_USER_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            User user = parseCursorToUser(cursor);
+            callBack.onSuccess(user);
+        } else {
+            callBack.onFailure("null");
+        }
+
+    }
+
+    private User parseCursorToUser(Cursor cursor) {
+        User user = new User();
+        int indexName = cursor.getColumnIndex(User.UserEntry.COLUMN_NAME_USER);
+        int indexId = cursor.getColumnIndex(User.UserEntry.COLUMN_NAME_USER_ID);
+        int indexImage = cursor.getColumnIndex(User.UserEntry.COLUMN_IMAGE);
+        int indexEmail = cursor.getColumnIndex(User.UserEntry.COLUMN_EMAIL);
+        int indexToken = cursor.getColumnIndex(User.UserEntry.COLUMN_TOKEN);
+        user.setId(cursor.getInt(indexId));
+        user.setName(cursor.getString(indexName));
+        user.setImage(cursor.getString(indexImage));
+        user.setToken(cursor.getString(indexToken));
+        user.setEmail(cursor.getString(indexEmail));
+        return user;
     }
 
     /**

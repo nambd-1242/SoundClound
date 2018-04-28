@@ -2,6 +2,9 @@ package com.framgia.mysoundcloud.screen.splash;
 
 import android.os.Handler;
 
+import com.framgia.mysoundcloud.data.model.User;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
+
 /**
  * Created by sonng266 on 26/02/2018.
  */
@@ -30,7 +33,12 @@ public class SplashPresenter implements SplashContract.Presenter {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mView.showMainApp();
+                User user = SharePreferences.getInstance().getUser();
+//                if (user == null) {
+//                    mView.loginActivity();
+//                } else {
+                    mView.showMainApp(user);
+//                }
             }
         }, millisecond);
     }

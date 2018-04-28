@@ -1,5 +1,6 @@
 package com.framgia.mysoundcloud.screen.splash;
 
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.screen.BasePresenter;
 
 /**
@@ -11,7 +12,9 @@ interface SplashContract {
      * View.
      */
     interface View {
-        void showMainApp();
+        void showMainApp(User user);
+
+        void loginActivity();
     }
 
     /**

@@ -48,6 +48,8 @@ public final class Constant {
     public static final String ARGUMENT_TRACK_LIST_LISTENER = "ARGUMENT_TRACK_LIST_LISTENER";
     public static final String ARGUMENT_NEXT_UP_LISTENER = "ARGUMENT_NEXT_UP_LISTENER";
     public static final String ARGUMENT_CURRENT_TRACK_POSITION = "ARGUMENT_CURRENT_TRACK_POSITION";
+    public static final String USER = "ARGUMENT_CURRENT_USER";
+
 
     // SQL
     public static final String DATABASE_NAME = "MySoundCloud.db";

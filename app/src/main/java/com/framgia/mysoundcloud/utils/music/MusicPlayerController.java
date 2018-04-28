@@ -9,6 +9,7 @@ import android.util.Log;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.service.MusicService;
 import com.framgia.mysoundcloud.utils.Constant;
+import com.framgia.mysoundcloud.utils.StringUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -303,7 +304,8 @@ public class MusicPlayerController implements MusicPlayerManager{
         try {
             mMediaPlayer.reset();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setDataSource(mTracks.get(mCurrentTrackPosition).getUri());
+            String url = StringUtil.getUrlStreamTrack(mTracks.get(mCurrentTrackPosition).getUri());
+            mMediaPlayer.setDataSource(url);
             mMediaPlayer.prepareAsync();
             mMediaPlayer.setOnCompletionListener(mCompletion);
             mMediaPlayer.setOnPreparedListener(mOnPrepared);
