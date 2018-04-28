@@ -24,9 +24,9 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
     @Override
     public void showMainApp(User user) {
-//        if (user == null) return;
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Constant.USER , user);
+        if (user == null) return;
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.USER , user);
         new Navigator(this).startActivity(MainActivity.class, false);
         finish();
     }

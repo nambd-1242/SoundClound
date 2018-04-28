@@ -34,11 +34,12 @@ public class SplashPresenter implements SplashContract.Presenter {
             @Override
             public void run() {
                 User user = SharePreferences.getInstance().getUser();
-//                if (user == null) {
-//                    mView.loginActivity();
-//                } else {
+                if (user == null) {
+                    mView.loginActivity();
+                } else {
                     mView.showMainApp(user);
-//                }
+                }
+
             }
         }, millisecond);
     }
