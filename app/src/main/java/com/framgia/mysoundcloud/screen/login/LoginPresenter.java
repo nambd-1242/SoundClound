@@ -55,7 +55,6 @@ public class LoginPresenter implements LoginContact.LoginPresenter {
                 }
             });
         } catch (ApiException e) {
-
-        }
-    }
+            e.getStatusCode();
+        } }
 }
