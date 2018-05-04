@@ -114,7 +114,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
         }
     }
 
-    public void addPlaylistByIdUser(final int idUser,
+    public void addPlaylistByIdUser(final String idUser,
                                     final OnHandleDatabaseListener listener, String playlist) {
         if (mPlaylistTrackDbHelper == null || playlist == null || playlist == null) {
             listener.onHandleFailure("fail");
@@ -145,7 +145,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     }
 
     @Override
-    public void addTracksToNewPlaylist( int idUser,String newPlaylistName,
+    public void addTracksToNewPlaylist( String idUser,String newPlaylistName,
                                        final OnHandleDatabaseListener listener, final Track... tracks) {
         if (mPlaylistTrackDbHelper == null || tracks == null
                 || tracks.length == 0 || newPlaylistName == null) {
@@ -221,13 +221,13 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     }
 
     @Override
-    public void addTracksToFavorite(int idUser, Track track, OnHandleDatabaseListener listener) {
+    public void addTracksToFavorite(String idUser, Track track, OnHandleDatabaseListener listener) {
         if (mPlaylistTrackDbHelper == null || track == null) return;
         mPlaylistTrackDbHelper.addTrackFavorite(track, idUser, listener);
     }
 
     @Override
-    public void getTrackFavorite(int idUser, OnFetchDataListener<Track> listener) {
+    public void getTrackFavorite(String idUser, OnFetchDataListener<Track> listener) {
         if (mPlaylistTrackDbHelper == null) return;
         mPlaylistTrackDbHelper.getTrackFavorite(idUser , listener);
     }

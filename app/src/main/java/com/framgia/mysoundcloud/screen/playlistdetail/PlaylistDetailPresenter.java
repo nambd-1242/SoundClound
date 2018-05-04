@@ -37,7 +37,7 @@ public class PlaylistDetailPresenter implements PlayListDetailViewContract.Prese
     public void loadTrack(String flag) {
         if(flag.equals(Constant.FAVORITE)){
             // TODO: 4/28/2018 idUser
-            int idUser  = SharePreferences.getInstance().getUser().getId();
+            String idUser  = SharePreferences.getInstance().getUser().getId();
             TrackRepository.getInstance().getTrackFavorite(idUser ,this );
         }
         if(flag.equals(Constant.DOWLOAD)){

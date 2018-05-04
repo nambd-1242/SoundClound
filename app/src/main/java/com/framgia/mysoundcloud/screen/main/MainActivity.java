@@ -392,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
                     if (user == null) {
                         return;
                     }
-                    int idUser = user.getId();
+                    String idUser = user.getId();
                     TrackRepository.getInstance().addTracksToFavorite(idUser, track, new TrackDataSource.OnHandleDatabaseListener() {
                         @Override
                         public void onHandleSuccess(String message) {

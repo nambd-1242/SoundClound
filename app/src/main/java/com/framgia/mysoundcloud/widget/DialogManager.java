@@ -98,7 +98,7 @@ public class DialogManager implements DialogManagerInterface {
             public void onClick(View v) {
                 User user = SharePreferences.getInstance().getUser();
                 if(user== null)return;
-                int id = user.getId();
+                String id = user.getId();
                 TrackRepository.getInstance().addTracksToNewPlaylist(id,
                         editTextNewPlaylist.getText().toString(), listener, tracks);
             }

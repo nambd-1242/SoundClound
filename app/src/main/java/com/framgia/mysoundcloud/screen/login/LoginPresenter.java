@@ -57,4 +57,19 @@ public class LoginPresenter implements LoginContact.LoginPresenter {
         } catch (ApiException e) {
             e.getStatusCode();
         } }
+
+    public void handleSignInResult(User user) {
+        userRepository.login(user, new UserDataSource.ResultCallBack<User>() {
+            @Override
+            public void onSuccess(User user) {
+                loginView.onSuccess(user);
+            }
+
+            @Override
+            public void onFailure(String mes) {
+                loginView.onFailure();
+            }
+        });
+
+    }
 }
