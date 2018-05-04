@@ -9,13 +9,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public interface UserDataSource {
     interface UserLocalDataSource {
-        void getInforUser(int idUser, ResultCallBack<User> callBack);
+        void getInforUser(String idUser, ResultCallBack<User> callBack);
 
         void addUser(User user, ResultCallBack<User> callBack);
     }
 
     interface UserRemoveDataSource {
-        void login(GoogleSignInAccount user , UserDataSource.ResultCallBack<User> callBack);
+        void login(GoogleSignInAccount user, UserDataSource.ResultCallBack<User> callBack);
+
+        void login(User user, UserDataSource.ResultCallBack<User> callBack);
     }
 
     interface ResultCallBack<T> {

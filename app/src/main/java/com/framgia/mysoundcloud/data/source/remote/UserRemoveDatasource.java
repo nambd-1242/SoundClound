@@ -24,14 +24,21 @@ public class UserRemoveDatasource implements UserDataSource.UserRemoveDataSource
             callBack.onFailure("null");
         else {
             User userLocal = new User();
+            userLocal.setId(user.getId());
             userLocal.setEmail(user.getEmail());
             userLocal.setName(user.getDisplayName());
             userLocal.setToken(user.getIdToken());
-            if(user.getPhotoUrl() != null) {
+            if (user.getPhotoUrl() != null) {
                 userLocal.setImage(user.getPhotoUrl().toString());
             }
             userLocal.setToken(user.getIdToken());
             callBack.onSuccess(userLocal);
         }
+    }
+
+    @Override
+    public void login(User user, UserDataSource.ResultCallBack<User> callBack) {
+        if (user != null)
+            callBack.onSuccess(user);
     }
 }

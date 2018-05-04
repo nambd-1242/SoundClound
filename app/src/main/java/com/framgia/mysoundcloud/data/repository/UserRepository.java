@@ -36,8 +36,8 @@ public class UserRepository implements UserDataSource.UserRemoveDataSource,
     }
 
     @Override
-    public void getInforUser(int idUser, UserDataSource.ResultCallBack<User> callBack) {
-
+    public void getInforUser(String idUser, UserDataSource.ResultCallBack<User> callBack) {
+        userLocalDataSource.getInforUser(idUser, callBack);
     }
 
     @Override
@@ -47,6 +47,33 @@ public class UserRepository implements UserDataSource.UserRemoveDataSource,
 
     @Override
     public void login(GoogleSignInAccount user, final UserDataSource.ResultCallBack<User> callBack) {
+        userRemoveDataSource.login(user, new UserDataSource.ResultCallBack<User>() {
+            @Override
+            public void onSuccess(User user) {
+                addUser(user, new UserDataSource.ResultCallBack<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        if (user == null) return;
+                        SharePreferences.getInstance().putUser(user);
+                        callBack.onSuccess(user);
+                    }
+
+                    @Override
+                    public void onFailure(String mes) {
+                        callBack.onFailure(mes);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String mes) {
+                callBack.onFailure(mes);
+            }
+        });
+    }
+
+    @Override
+    public void login(User user, final UserDataSource.ResultCallBack<User> callBack) {
         userRemoveDataSource.login(user, new UserDataSource.ResultCallBack<User>() {
             @Override
             public void onSuccess(User user) {

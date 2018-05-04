@@ -32,8 +32,8 @@ public class UserLocalDataSource implements UserDataSource.UserLocalDataSource {
     }
 
     @Override
-    public void getInforUser(int idUser, UserDataSource.ResultCallBack<User> callBack) {
-
+    public void getInforUser(String idUser, UserDataSource.ResultCallBack<User> callBack) {
+        mPlaylistTrackDbHelper.getUserbyId(idUser ,callBack);
     }
 
     @Override

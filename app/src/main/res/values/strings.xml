@@ -59,5 +59,7 @@
         <item>Top 40</item>
         <item>Top 50</item>
     </string-array>
+    <string name="facebook_app_id">1597316986984626</string>
+    <string name="fb_login_protocol_scheme">fb1597316986984626</string>
 
 </resources>
