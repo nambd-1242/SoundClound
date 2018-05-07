@@ -26,6 +26,6 @@ public interface ProfileContract {
     interface Presenter extends BasePresenter<ProfileContract.View> {
         void loadData();
 
-        void doLoguot();
+        void doLogout();
     }
 }
