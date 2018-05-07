@@ -84,6 +84,15 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, V
 
     @Override
     public void onClick(View view) {
-        mPresenter.doLoguot();
+        mPresenter.doLogout();
     }
+//    private void signOut() {
+//        mGoogleSignInClient.signOut()
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        // ...
+//                    }
+//                });
+//    }
 }
