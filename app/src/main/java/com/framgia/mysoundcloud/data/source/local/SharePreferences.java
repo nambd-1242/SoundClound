@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 public class SharePreferences {
     private static final String USER = "userCurrent";
+    private static final String TYPE_LOGIN = "type";
     private static final String KEY = "soundclound";
 
     private SharedPreferences mSharedPreferences;
@@ -32,9 +33,19 @@ public class SharePreferences {
 
     public User getUser() {
         String user = mSharedPreferences.getString(USER, null);
-        if(user == null)
+        if (user == null)
             return null;
         return new Gson().fromJson(user, User.class);
+    }
+
+    public void putTypeLogin(@User.TYPE_LOGIN String type) {
+        if (type == null) return;
+        mSharedPreferences.edit().putString(TYPE_LOGIN, type).apply();
+    }
+
+    public String getType() {
+        return mSharedPreferences.getString(TYPE_LOGIN, null);
+
     }
 
     public void putUser(User user) {
@@ -42,4 +53,9 @@ public class SharePreferences {
         String s = new Gson().toJson(user);
         mSharedPreferences.edit().putString(USER, s).apply();
     }
+
+    public void removeUser() {
+        mSharedPreferences.edit().clear().apply();
+    }
+
 }

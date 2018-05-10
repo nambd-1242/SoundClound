@@ -14,7 +14,7 @@ import java.util.List;
  * Created by sonng266 on 15/03/2018.
  */
 
-public class ProfilePresenter implements ProfileContract.Presenter{
+public class ProfilePresenter implements ProfileContract.Presenter {
 
     private ProfileContract.View mView;
 
@@ -37,7 +37,7 @@ public class ProfilePresenter implements ProfileContract.Presenter{
     @Override
     public void loadData() {
         User user = SharePreferences.getInstance().getUser();
-        if(user != null){
+        if (user != null) {
             UserRepository.getInstance().getInforUser(user.getId(), new UserDataSource.ResultCallBack<User>() {
                 @Override
                 public void onSuccess(User user) {
@@ -54,6 +54,15 @@ public class ProfilePresenter implements ProfileContract.Presenter{
 
     @Override
     public void doLogout() {
-
+        String type = SharePreferences.getInstance().getType();
+        switch (type) {
+            case User.TYPE_LOGIN.LOGIN_FACEBOOK:
+                mView.logoutFacebook();
+                break;
+            case User.TYPE_LOGIN.LOGIN_GG:
+                mView.logoutGoogle();
+                break;
+        }
     }
+
 }

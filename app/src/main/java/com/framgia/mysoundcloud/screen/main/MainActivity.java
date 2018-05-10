@@ -171,6 +171,10 @@ public class MainActivity extends AppCompatActivity implements MainViewConstract
                 updateTitle(getString(R.string.title_like));
                 mViewPager.setCurrentItem(3);
                 break;
+            case 4:
+                updateTitle(getString(R.string.profile));
+                mViewPager.setCurrentItem(4);
+                break;
 
         }
 

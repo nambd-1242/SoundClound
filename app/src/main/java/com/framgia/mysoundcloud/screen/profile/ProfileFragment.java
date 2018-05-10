@@ -3,6 +3,7 @@ package com.framgia.mysoundcloud.screen.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.User;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.screen.login.LoginActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,7 +52,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_playlist, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         mPresenter = new ProfilePresenter();
         mPresenter.setView(this);
@@ -68,6 +76,30 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, V
     }
 
     @Override
+    public void logoutFacebook() {
+        LoginManager.getInstance().logOut();
+        SharePreferences.getInstance().removeUser();
+        logOutSuccess();
+    }
+
+    @Override
+    public void logoutGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(this.getResources().getString(R.string.))?
+                .requestEmail()
+                .build();
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                SharePreferences.getInstance().removeUser();
+                logOutSuccess();
+            }
+        });
+
+    }
+
+    @Override
     public void logOutSuccess() {
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
@@ -86,13 +118,5 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, V
     public void onClick(View view) {
         mPresenter.doLogout();
     }
-//    private void signOut() {
-//        mGoogleSignInClient.signOut()
-//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // ...
-//                    }
-//                });
-//    }
+
 }

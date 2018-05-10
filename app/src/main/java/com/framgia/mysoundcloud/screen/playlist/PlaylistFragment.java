@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Playlist;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.screen.main.MainViewConstract;
 import com.framgia.mysoundcloud.utils.Constant;
 
@@ -115,11 +117,12 @@ public class PlaylistFragment extends Fragment implements PlaylistContract.View,
                 if (name.isEmpty()) {
                     Toast.makeText(
                             getContext(), R.string.msg_err_name_null, Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Playlist playlist = new Playlist();
                     playlist.setName(name);
-                    TrackRepository.getInstance().insertPlayList(playlist, new TrackDataSource.OnHandleDatabaseListener() {
+                    User user = SharePreferences.getInstance().getUser();
+                    if (user == null) return;
+                    TrackRepository.getInstance().insertPlayList(user.getId(), playlist, new TrackDataSource.OnHandleDatabaseListener() {
                         @Override
                         public void onHandleSuccess(String message) {
                             updateUI();

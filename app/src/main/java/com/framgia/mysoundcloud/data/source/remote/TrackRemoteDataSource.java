@@ -29,7 +29,7 @@ public class TrackRemoteDataSource implements TrackDataSource.RemoteDataSource {
     @Override
     public void searchTracksRemote(String trackName, int offSet,
                                    OnFetchDataListener<Track> listener) {
-        new SearchTrackFromUrl(listener)
+        new FetchTrackSearchFromUrl(listener)
                 .execute(StringUtil.convertUrlSearchTrack(trackName, offSet));
     }
 

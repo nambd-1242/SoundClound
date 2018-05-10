@@ -34,7 +34,6 @@ public class SearchViewPresenter implements SearchViewContract.Presenter,
     @Override
     public void searchTrack(String trackName, int offSet) {
         TrackRepository.getInstance().searchTracksRemote(trackName, offSet, this);
-
         mView.showLoadingIndicator();
     }
 

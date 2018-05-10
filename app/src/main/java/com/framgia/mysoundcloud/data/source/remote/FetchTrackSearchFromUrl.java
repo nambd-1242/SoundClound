@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 import com.framgia.mysoundcloud.data.model.Collection;
 import com.framgia.mysoundcloud.data.model.CollectionResult;
+import com.framgia.mysoundcloud.data.model.CollectionResultSearch;
+import com.framgia.mysoundcloud.data.model.CollectionSearch;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.utils.Constant;
@@ -18,12 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List<Track>> {
+public  class FetchTrackSearchFromUrl extends AsyncTask<String, Void, List<Track>> {
 
     protected TrackDataSource.OnFetchDataListener<Track> mListener;
 
-    protected BaseFetchTrackFromUrl(TrackDataSource.OnFetchDataListener<Track> listener) {
+    protected FetchTrackSearchFromUrl(TrackDataSource.OnFetchDataListener<Track> listener) {
         mListener = listener;
     }
 
@@ -32,15 +33,15 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
         try {
             String url = strings[0];
             String result = getJSONStringFromURL(url);
-            CollectionResult collectionResult =
-                    new Gson().fromJson(result, CollectionResult.class);
+            CollectionResultSearch collectionResult =
+                    new Gson().fromJson(result, CollectionResultSearch.class);
             if (collectionResult == null) {
                 mListener.onFetchDataFailure(Constant.ERROR_NULL);
                 return null;
             }
             List<Track> tracks = new ArrayList<>();
-            for (Collection collection : collectionResult.getCollection()) {
-                tracks.add(collection.getTrack());
+            for (Track collection : collectionResult.getCollection()) {
+                tracks.add(collection);
             }
             return tracks;
         } catch (IOException e) {

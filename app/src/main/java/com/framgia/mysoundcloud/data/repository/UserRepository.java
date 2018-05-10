@@ -55,6 +55,8 @@ public class UserRepository implements UserDataSource.UserRemoveDataSource,
                     public void onSuccess(User user) {
                         if (user == null) return;
                         SharePreferences.getInstance().putUser(user);
+                        SharePreferences.getInstance().putTypeLogin(User.TYPE_LOGIN.LOGIN_GG);
+
                         callBack.onSuccess(user);
                     }
 
@@ -82,6 +84,8 @@ public class UserRepository implements UserDataSource.UserRemoveDataSource,
                     public void onSuccess(User user) {
                         if (user == null) return;
                         SharePreferences.getInstance().putUser(user);
+                        SharePreferences.getInstance().putTypeLogin(User.TYPE_LOGIN.LOGIN_FACEBOOK);
+
                         callBack.onSuccess(user);
                     }
 

@@ -11,7 +11,6 @@ import com.framgia.mysoundcloud.data.model.Playlist;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.data.source.local.config.PlaylistTrackDbHelper;
-import com.framgia.mysoundcloud.utils.Constant;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -109,8 +108,8 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
         }
 
         for (int i = 0; i < tracks.length; i++) {
-            mPlaylistTrackDbHelper.insertTrack(tracks[i] , listener);
-            mPlaylistTrackDbHelper.insertToTablePlaylistHasTrack(tracks[i].getId(), playlistId , listener);
+            mPlaylistTrackDbHelper.insertTrack(tracks[i], listener);
+            mPlaylistTrackDbHelper.insertToTablePlaylistHasTrack(tracks[i].getId(), playlistId, listener);
         }
     }
 
@@ -139,13 +138,13 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
 
             @Override
             public void onHandleFailure(String message) {
-                      listener.onHandleFailure(message);
+                listener.onHandleFailure(message);
             }
         });
     }
 
     @Override
-    public void addTracksToNewPlaylist( String idUser,String newPlaylistName,
+    public void addTracksToNewPlaylist(String idUser, String newPlaylistName,
                                        final OnHandleDatabaseListener listener, final Track... tracks) {
         if (mPlaylistTrackDbHelper == null || tracks == null
                 || tracks.length == 0 || newPlaylistName == null) {
@@ -164,7 +163,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
 
                     @Override
                     public void onHandleFailure(String message) {
-                       listener.onHandleFailure(message);
+                        listener.onHandleFailure(message);
                     }
                 }, tracks);
             }
@@ -173,7 +172,7 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
             public void onHandleFailure(String message) {
                 listener.onHandleFailure(message);
             }
-        } , newPlaylistName);
+        }, newPlaylistName);
     }
 
 
@@ -184,41 +183,33 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     }
 
     @Override
-    public void insertPlayList(Playlist playlist, final OnHandleDatabaseListener listener) {
+    public void insertPlayList(String idUsder, Playlist playlist, final OnHandleDatabaseListener listener) {
         if (playlist == null) return;
-        mPlaylistTrackDbHelper.insertPlaylist(playlist.getName(), new OnHandleDatabaseListener() {
-            @Override
-            public void onHandleSuccess(String message) {
-                listener.onHandleSuccess(message);
-
-            }
-
-            @Override
-            public void onHandleFailure(String message) {
-                listener.onHandleFailure(message);
-            }
-        });
+        addPlaylistByIdUser(idUsder, listener, playlist.getName());
 
     }
 
     @Override
-    public List<Playlist> getDetailPlaylist() {
+    public List<Playlist> getDetailPlaylistbyIdUser(String id) {
+        List<Playlist> playlistsResult = new ArrayList<>();
+        List<Integer> idPlaylists = mPlaylistTrackDbHelper.getPlaylistByIdUser(id);
         if (mPlaylistTrackDbHelper == null) return null;
-
         List<Playlist> playlists = getPlaylist();
         if (playlists == null) return null;
-        for (int i = 0; i < playlists.size() ; i++) {
-            if (playlists.get(i).getName().equals(Constant.TABLE_FAVORITE)) {
-                playlists.remove(i);
-            }
-        }
         for (Playlist playlist : playlists) {
             List<Track> tracks = mPlaylistTrackDbHelper.getTracksWithPlaylistId(playlist.getId());
             playlist.setTracks(tracks);
         }
-
-        return playlists;
+        for (int i = 0; i < playlists.size(); i++) {
+            for (int j = 0; j < idPlaylists.size(); j++) {
+                if (playlists.get(i).getId() == idPlaylists.get(j)) {
+                    playlistsResult.add(playlists.get(i));
+                }
+            }
+        }
+        return playlistsResult;
     }
+
 
     @Override
     public void addTracksToFavorite(String idUser, Track track, OnHandleDatabaseListener listener) {
@@ -229,6 +220,6 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     @Override
     public void getTrackFavorite(String idUser, OnFetchDataListener<Track> listener) {
         if (mPlaylistTrackDbHelper == null) return;
-        mPlaylistTrackDbHelper.getTrackFavorite(idUser , listener);
+        mPlaylistTrackDbHelper.getTrackFavorite(idUser, listener);
     }
 }

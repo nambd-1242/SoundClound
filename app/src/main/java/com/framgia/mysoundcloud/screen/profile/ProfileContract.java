@@ -1,10 +1,7 @@
 package com.framgia.mysoundcloud.screen.profile;
 
-import com.framgia.mysoundcloud.data.model.Playlist;
 import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.screen.BasePresenter;
-
-import java.util.List;
 
 /**
  * Created by sonng266 on 15/03/2018.
@@ -16,6 +13,10 @@ public interface ProfileContract {
      */
     interface View {
         void initData(User user);
+
+        void logoutFacebook();
+
+        void logoutGoogle();
 
         void logOutSuccess();
     }

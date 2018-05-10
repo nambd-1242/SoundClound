@@ -98,9 +98,7 @@ public class SearchFragment extends BaseFragment implements SearchViewContract.V
 
     @Override
     public void hideLoadingIndicator() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
-        }
     }
 
     @Override

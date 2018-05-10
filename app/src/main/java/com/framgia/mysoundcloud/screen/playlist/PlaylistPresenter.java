@@ -1,8 +1,10 @@
 package com.framgia.mysoundcloud.screen.playlist;
 
 import com.framgia.mysoundcloud.data.model.Playlist;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 
 import java.util.List;
 
@@ -31,7 +33,12 @@ public class PlaylistPresenter implements PlaylistContract.Presenter, TrackDataS
 
     @Override
     public void loadPlaylist() {
-        onFetchDataSuccess(TrackRepository.getInstance().getDetailPlaylist());
+        User user = SharePreferences.getInstance().getUser() ;
+        if(user != null){
+            String id = user.getId();
+            onFetchDataSuccess(TrackRepository.getInstance().getDetailPlaylistbyIdUser(id));
+
+        }
     }
 
     @Override

@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import com.framgia.mysoundcloud.data.model.Playlist;
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
+import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.List;
@@ -26,8 +28,11 @@ public class PlaylistDialogAdapter extends RecyclerView.Adapter<PlaylistDialogAd
     private TrackDataSource.OnHandleDatabaseListener mListener;
 
     public PlaylistDialogAdapter(TrackDataSource.OnHandleDatabaseListener listener, Track... tracks) {
-        mPlaylists = TrackRepository.getInstance().getPlaylist();
-        for (int i = 0; i <mPlaylists.size() ; i++) {
+        User user = SharePreferences.getInstance().getUser();
+        if (user == null) return;
+        String id = user.getId();
+        mPlaylists = TrackRepository.getInstance().getDetailPlaylistbyIdUser(id);
+        for (int i = 0; i < mPlaylists.size(); i++) {
             if (mPlaylists.get(i).getName().equals(Constant.TABLE_FAVORITE)) {
                 mPlaylists.remove(i);
             }

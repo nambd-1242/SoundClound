@@ -60,10 +60,10 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
-    public void addTracksToNewPlaylist(String idUser , String newPlaylistName,
+    public void addTracksToNewPlaylist(String idUser, String newPlaylistName,
                                        OnHandleDatabaseListener listener, Track... tracks) {
         if (mTrackLocalDataSource == null) return;
-        mTrackLocalDataSource.addTracksToNewPlaylist(  idUser,newPlaylistName, listener, tracks);
+        mTrackLocalDataSource.addTracksToNewPlaylist(idUser, newPlaylistName, listener, tracks);
     }
 
 
@@ -74,21 +74,21 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
-    public void insertPlayList(Playlist playlist, OnHandleDatabaseListener listener) {
+    public void insertPlayList(String idUser, Playlist playlist, OnHandleDatabaseListener listener) {
         if (mTrackLocalDataSource == null) return;
-        mTrackLocalDataSource.insertPlayList(playlist, listener);
+        mTrackLocalDataSource.insertPlayList(idUser, playlist, listener);
     }
 
     @Override
     public void getTrackFavorite(String idUser, OnFetchDataListener<Track> listener) {
-        if (mTrackLocalDataSource == null) return ;
-         mTrackLocalDataSource.getTrackFavorite(idUser, listener);
+        if (mTrackLocalDataSource == null) return;
+        mTrackLocalDataSource.getTrackFavorite(idUser, listener);
     }
 
     @Override
-    public List<Playlist> getDetailPlaylist() {
+    public List<Playlist> getDetailPlaylistbyIdUser(String id) {
         if (mTrackLocalDataSource == null) return null;
-        return mTrackLocalDataSource.getDetailPlaylist();
+        return mTrackLocalDataSource.getDetailPlaylistbyIdUser(id);
     }
 
     @Override

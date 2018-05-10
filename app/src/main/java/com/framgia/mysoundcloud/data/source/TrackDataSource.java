@@ -29,9 +29,9 @@ public interface TrackDataSource {
 
         List<Playlist> getPlaylist();
 
-        void insertPlayList(Playlist playlist, OnHandleDatabaseListener listener);
+        void insertPlayList(String idUser ,Playlist playlist, OnHandleDatabaseListener listener);
 
-        List<Playlist> getDetailPlaylist();
+        List<Playlist> getDetailPlaylistbyIdUser(String idUser);
 
         void addTracksToFavorite(String idUser, Track track, OnHandleDatabaseListener listener);
 
