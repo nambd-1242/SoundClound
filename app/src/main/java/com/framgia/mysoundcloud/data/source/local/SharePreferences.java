@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 import com.framgia.mysoundcloud.data.model.User;
 import com.google.gson.Gson;
 
-/**
- * Created by Sony on 1/12/2018.
- */
 
 public class SharePreferences {
     private static final String USER = "userCurrent";

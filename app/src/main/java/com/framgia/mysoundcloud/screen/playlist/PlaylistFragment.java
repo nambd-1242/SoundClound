@@ -11,9 +11,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.framgia.mysoundcloud.R;
@@ -30,7 +32,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlaylistFragment extends Fragment implements PlaylistContract.View, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class PlaylistFragment extends Fragment implements PlaylistContract.View, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, PlaylistAdapter.CallBack {
 
     private static PlaylistFragment sPlaylistFragment;
 
@@ -80,9 +82,15 @@ public class PlaylistFragment extends Fragment implements PlaylistContract.View,
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+
+    }
+
     private void setupUI(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        mPlaylistAdapter = new PlaylistAdapter(getContext(), mListener);
+        mPlaylistAdapter = new PlaylistAdapter(getContext(), mListener , this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(
@@ -145,4 +153,36 @@ public class PlaylistFragment extends Fragment implements PlaylistContract.View,
     private void updateUI() {
         mPresenter.loadPlaylist();
     }
+
+    @Override
+    public void onItemMoreClick(Playlist playlist , View view) {
+        if(playlist == null) return;
+        showPopupMenu(playlist , view);
+    }
+
+    private void showPopupMenu(final Playlist playlist, View view) {
+        final PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        popupMenu.inflate(R.menu.options_menu_item_playlist);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_edit_name_playlist:
+
+                        return true;
+                    case R.id.action_delete_playlist:
+                        User user = SharePreferences.getInstance().getUser();
+                        if(user != null) {
+                            mPresenter.deletePlayList(playlist, user.getId());
+                        }
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+
+
 }

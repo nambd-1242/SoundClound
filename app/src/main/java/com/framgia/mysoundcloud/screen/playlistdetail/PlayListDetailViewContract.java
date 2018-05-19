@@ -13,6 +13,7 @@ public interface PlayListDetailViewContract {
      * View.
      */
     interface View extends BaseView {
+        void showMessage(String message);
     }
 
     /**
@@ -20,6 +21,8 @@ public interface PlayListDetailViewContract {
      */
     interface Presenter extends BasePresenter<PlayListDetailViewContract.View> {
         void loadTrack(String flag);
+
+        void deleteTrackFavorie(Track track);
     }
 
     interface DeleteTrackListener {

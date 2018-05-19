@@ -1,6 +1,7 @@
 package com.framgia.mysoundcloud.screen.playlistdetail;
 
 import com.framgia.mysoundcloud.data.model.Track;
+import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.data.source.local.SharePreferences;
@@ -44,6 +45,25 @@ public class PlaylistDetailPresenter implements PlayListDetailViewContract.Prese
             TrackRepository.getInstance().getTracksLocal(this);
         }
 
+    }
+
+    @Override
+    public void deleteTrackFavorie(Track track) {
+        User user = SharePreferences.getInstance().getUser();
+        if(user == null)return;
+        String idUser = user.getId();
+        TrackRepository.getInstance().deleteTrackFavorite(track, idUser, new TrackDataSource.OnHandleDatabaseListener() {
+            @Override
+            public void onHandleSuccess(String message) {
+                mView.showMessage(message);
+                loadTrack(Constant.FAVORITE);
+            }
+
+            @Override
+            public void onHandleFailure(String message) {
+                mView.showMessage(message);
+            }
+        });
     }
 
     @Override

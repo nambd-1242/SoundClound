@@ -15,6 +15,8 @@ public interface PlaylistContract {
      */
     interface View {
         void showPlaylist(List<Playlist> playlists);
+
+        void showMessage(String message);
     }
 
     /**
@@ -22,5 +24,7 @@ public interface PlaylistContract {
      */
     interface Presenter extends BasePresenter<PlaylistContract.View> {
         void loadPlaylist();
+
+        void deletePlayList(Playlist playlist, String id);
     }
 }

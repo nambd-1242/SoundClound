@@ -60,6 +60,12 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     }
 
     @Override
+    public void deletePlaylist(Playlist playlist, String userId, OnHandleDatabaseListener listener) {
+        if (mTrackLocalDataSource == null) return;
+        mTrackLocalDataSource.deletePlaylist(playlist, userId, listener);
+    }
+
+    @Override
     public void addTracksToNewPlaylist(String idUser, String newPlaylistName,
                                        OnHandleDatabaseListener listener, Track... tracks) {
         if (mTrackLocalDataSource == null) return;
@@ -83,6 +89,12 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
     public void getTrackFavorite(String idUser, OnFetchDataListener<Track> listener) {
         if (mTrackLocalDataSource == null) return;
         mTrackLocalDataSource.getTrackFavorite(idUser, listener);
+    }
+
+    @Override
+    public void deleteTrackFavorite(Track track, String idUser, OnHandleDatabaseListener listener) {
+        if(mTrackLocalDataSource == null)return;
+        mTrackLocalDataSource.deleteTrackFavorite(track, idUser, listener);
     }
 
     @Override

@@ -308,7 +308,7 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
         values.put(User.UserEntry.COLUMN_TOKEN, user.getToken());
         try {
             long a = database.insert(User.UserEntry.TABLE_NAME_USER, null, values);
-                callBack.onSuccess(user);
+            callBack.onSuccess(user);
         } catch (SQLException e) {
             callBack.onFailure(e.getMessage());
         }
@@ -358,6 +358,43 @@ public class PlaylistTrackDbHelper extends SQLiteOpenHelper {
                 listener.onHandleSuccess("Add to favorite");
             else {
                 listener.onHandleFailure("This track is exist !!");
+            }
+        } catch (SQLException e) {
+            listener.onHandleFailure(e.getMessage());
+        }
+    }
+
+    //By Hieu
+    public void deletePlayList(Playlist playlist, String userId, TrackDataSource.OnHandleDatabaseListener listener) {
+        SQLiteDatabase database = getWritableDatabase();
+        try {
+            long a = database.delete(TABLE_NAME_USER_HAS_PLAYLIST,
+                    User.UserEntry.COLUMN_NAME_USER_ID + " = ? AND " + COLUMN_NAME_PLAYLIST_ID + " = ?",
+                    new String[]{userId, String.valueOf(playlist.getId())});
+            if (a > 0)
+                listener.onHandleSuccess("Delete " + playlist.getName() + "success !");
+            else {
+                listener.onHandleFailure("Error !!");
+            }
+        } catch (SQLException e) {
+            listener.onHandleFailure(e.getMessage());
+        }
+    }
+
+    // By Hieu
+    public void deleteTrackFavorite(Track track, String idUser, TrackDataSource.OnHandleDatabaseListener listener) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_TRACK_ID, track.getId());
+        values.put(User.UserEntry.COLUMN_NAME_USER_ID, idUser);
+        try {
+            long a = database.delete(TABLE_NAME_FAVORITE,
+                    COLUMN_NAME_TRACK_ID + " = ? AND +" + User.UserEntry.COLUMN_NAME_USER_ID + " = ?",
+                    new String[]{String.valueOf(track.getId()), String.valueOf(idUser)});
+            if (a > 0)
+                listener.onHandleSuccess("Delete " + track.getTitle() + "success !");
+            else {
+                listener.onHandleFailure("Error !!");
             }
         } catch (SQLException e) {
             listener.onHandleFailure(e.getMessage());
