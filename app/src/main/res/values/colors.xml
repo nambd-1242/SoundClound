@@ -21,6 +21,7 @@
 
     <!--Black-->
     <color name="black_transparent">#e3181818</color>
+    <color name="whrite">#ffffff</color>
 
 
 </resources>

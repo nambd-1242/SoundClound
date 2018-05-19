@@ -38,7 +38,7 @@
     <string name="msg_no_playlist_found">No playlist found</string>
     <string name="msg_null_playlist">Null playlist</string>
     <string name="title_playlist">Playlist</string>
-    <string name="title_like">Like</string>
+    <string name="title_like">Favorite</string>
     <string name="msg_my_playlist">My playlist</string>
     <string name="msg_0_tracks">0 tracks</string>
     <string name="msg_no_track_to_add">No track to add</string>

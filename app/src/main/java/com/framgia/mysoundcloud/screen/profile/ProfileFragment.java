@@ -71,8 +71,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, V
         if (user == null) return;
         tvname.setText(user.getName());
         tvMail.setText(user.getEmail());
-        Glide.with(getActivity()).load(user.getImage())
-                .into(circleImageView);
+        if(user.getImage()!= null ) {
+            Glide.with(getActivity()).load(user.getImage())
+                    .into(circleImageView);
+        }
     }
 
     @Override

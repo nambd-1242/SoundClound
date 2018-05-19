@@ -95,6 +95,7 @@ public class MusicGenresAdapter extends BaseTrackRecyclerViewAdapter<BaseTrackRe
             mTrack = mTracks.get(position);
             mTextTitle.setText(mTrack.getTitle());
             mTextPlaybackCount.setText(String.valueOf(mTrack.getDownloadCount()));
+            mTextPlaybackCount.setText(String.valueOf(mTrack.getDownloadCount()));
             if (mTrack.getPublisherMetadata() != null) {
                 mTextArtist.setText(mTrack.getPublisherMetadata().getArtist());
             }
@@ -128,7 +129,7 @@ public class MusicGenresAdapter extends BaseTrackRecyclerViewAdapter<BaseTrackRe
                                     mListener.onAddToPlaylist(mTrack);
                                     return true;
 
-                                case R.id.action_add_farvotie :
+                                case R.id.action_add_farvotie:
                                     if (mListener == null) return true;
                                     mListener.onAddToFavorite(mTrack);
                                     return true;

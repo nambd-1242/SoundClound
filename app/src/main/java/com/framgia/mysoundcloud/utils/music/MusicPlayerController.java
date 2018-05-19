@@ -305,6 +305,7 @@ public class MusicPlayerController implements MusicPlayerManager{
             mMediaPlayer.reset();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             String url = StringUtil.getUrlStreamTrack(mTracks.get(mCurrentTrackPosition).getUri());
+            Log.d("TAG", "loadTrack: " + url);
             mMediaPlayer.setDataSource(url);
             mMediaPlayer.prepareAsync();
             mMediaPlayer.setOnCompletionListener(mCompletion);
