@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Track;
-import com.framgia.mysoundcloud.data.repository.TrackRepository;
 import com.framgia.mysoundcloud.screen.BaseFragment;
 import com.framgia.mysoundcloud.screen.main.MainViewConstract;
 import com.framgia.mysoundcloud.utils.Constant;
@@ -147,8 +146,7 @@ public class PlaylistDetailTracksFragment extends BaseFragment
 
     @Override
     public void onDeleteClicked(Track track) {
-        if (!TrackRepository.getInstance().deleteTrack(track)) return;
-        mPresenter.loadTrack(flag);
+        mPresenter.deleteTrackFavorie(track);
     }
 
     private void initializePermissionStorage() {
@@ -173,5 +171,10 @@ public class PlaylistDetailTracksFragment extends BaseFragment
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mDownloadedTracksAdapter);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

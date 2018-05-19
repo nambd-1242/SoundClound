@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Playlist;
+import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.screen.main.MainViewConstract;
 
 import java.util.ArrayList;
@@ -25,11 +26,13 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     private Context mContext;
     private List<Playlist> mPlaylists;
     private MainViewConstract.TrackListListener mListener;
+    private CallBack callBack;
     private LayoutInflater mLayoutInflater;
 
-    public PlaylistAdapter(Context context, MainViewConstract.TrackListListener listener) {
+    public PlaylistAdapter(Context context, MainViewConstract.TrackListListener listener , CallBack callBack) {
         mContext = context;
         mListener = listener;
+        this.callBack = callBack;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
         private TextView mTextTitle;
         private ImageView mImagePlaylist;
         private TextView mTextTotalTracks;
+        private TextView mTxtMore;
         private Playlist mPlaylist;
 
         public ViewHolder(View itemView) {
@@ -79,12 +83,20 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             mTextTitle = itemView.findViewById(R.id.text_playlist_name);
             mTextTotalTracks = itemView.findViewById(R.id.text_playlist_total_tracks);
             mImagePlaylist = itemView.findViewById(R.id.image_playlist);
+            mImagePlaylist = itemView.findViewById(R.id.image_playlist);
+            mTxtMore = itemView.findViewById(R.id.text_options);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener == null) return;
                     mListener.onPlayedTrack(0, mPlaylist.getTracks());
+                }
+            });
+            mTxtMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callBack.onItemMoreClick(mPlaylist ,v);
                 }
             });
         }
@@ -99,5 +111,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
                     .load(playlist.getTracks().get(0).getArtworkUrl())
                     .into(mImagePlaylist);
         }
+    }
+    public interface CallBack {
+        void onItemMoreClick(Playlist playlist , View view);
     }
 }

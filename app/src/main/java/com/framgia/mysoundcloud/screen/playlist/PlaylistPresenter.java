@@ -8,9 +8,6 @@ import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 
 import java.util.List;
 
-/**
- * Created by sonng266 on 15/03/2018.
- */
 
 public class PlaylistPresenter implements PlaylistContract.Presenter, TrackDataSource.OnFetchDataListener<Playlist> {
 
@@ -39,6 +36,22 @@ public class PlaylistPresenter implements PlaylistContract.Presenter, TrackDataS
             onFetchDataSuccess(TrackRepository.getInstance().getDetailPlaylistbyIdUser(id));
 
         }
+    }
+
+    @Override
+    public void deletePlayList(Playlist playlist, String id) {
+        TrackRepository.getInstance().deletePlaylist(playlist, id, new TrackDataSource.OnHandleDatabaseListener() {
+            @Override
+            public void onHandleSuccess(String message) {
+                mView.showMessage(message);
+                loadPlaylist();
+            }
+
+            @Override
+            public void onHandleFailure(String message) {
+                mView.showMessage(message);
+            }
+        });
     }
 
     @Override

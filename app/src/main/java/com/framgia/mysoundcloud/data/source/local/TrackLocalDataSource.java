@@ -16,9 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 01/03/2018.
- */
+
 
 public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
 
@@ -111,6 +109,11 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
             mPlaylistTrackDbHelper.insertTrack(tracks[i], listener);
             mPlaylistTrackDbHelper.insertToTablePlaylistHasTrack(tracks[i].getId(), playlistId, listener);
         }
+    }
+    // Delete PlayList
+    @Override
+    public void deletePlaylist(Playlist playlist ,String userId, OnHandleDatabaseListener listener) {
+           mPlaylistTrackDbHelper.deletePlayList(playlist,userId,listener);
     }
 
     public void addPlaylistByIdUser(final String idUser,
@@ -221,5 +224,11 @@ public class TrackLocalDataSource implements TrackDataSource.LocalDataSource {
     public void getTrackFavorite(String idUser, OnFetchDataListener<Track> listener) {
         if (mPlaylistTrackDbHelper == null) return;
         mPlaylistTrackDbHelper.getTrackFavorite(idUser, listener);
+    }
+
+    @Override
+    public void deleteTrackFavorite(Track track, String idUser, OnHandleDatabaseListener listener) {
+        if(mPlaylistTrackDbHelper == null) return;
+        mPlaylistTrackDbHelper.deleteTrackFavorite(track, idUser, listener);
     }
 }
