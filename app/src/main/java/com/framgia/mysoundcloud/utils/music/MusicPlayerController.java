@@ -20,9 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-/**
- * Created by sonng266 on 04/03/2018.
- */
+
 
 public class MusicPlayerController implements MusicPlayerManager{
 

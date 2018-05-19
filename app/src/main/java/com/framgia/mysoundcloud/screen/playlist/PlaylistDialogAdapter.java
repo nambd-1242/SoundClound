@@ -16,9 +16,7 @@ import com.framgia.mysoundcloud.utils.Constant;
 
 import java.util.List;
 
-/**
- * Created by sonng266 on 15/03/2018.
- */
+
 
 public class PlaylistDialogAdapter extends RecyclerView.Adapter<PlaylistDialogAdapter.ViewHolder> {
 

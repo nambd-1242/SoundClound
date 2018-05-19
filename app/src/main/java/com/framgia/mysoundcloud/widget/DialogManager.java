@@ -21,9 +21,7 @@ import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 import com.framgia.mysoundcloud.screen.playlist.PlaylistDialogAdapter;
 
-/**
- * Created by sonng266 on 25/02/2018.
- */
+
 
 public class DialogManager implements DialogManagerInterface {
 

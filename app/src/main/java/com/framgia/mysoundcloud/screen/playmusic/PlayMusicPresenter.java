@@ -1,8 +1,5 @@
 package com.framgia.mysoundcloud.screen.playmusic;
 
-/**
- * Created by sonng266 on 03/03/2018.
- */
 
 public class PlayMusicPresenter implements PlayMusicContract.Presenter {
 

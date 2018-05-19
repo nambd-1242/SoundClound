@@ -2,9 +2,6 @@ package com.framgia.mysoundcloud.utils;
 
 import com.framgia.mysoundcloud.BuildConfig;
 
-/**
- * Created by sonng266 on 01/03/2018.
- */
 
 public class StringUtil {
     public static String convertUrlFetchMusicGenre(String genre, int limit, int offset) {

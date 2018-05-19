@@ -14,9 +14,6 @@ import com.framgia.mysoundcloud.screen.main.MainViewConstract;
 import com.framgia.mysoundcloud.utils.StringUtil;
 
 
-/**
- * Created by sonng266 on 11/03/2018.
- */
 
 public class PlaylistDetailAdapterTrack
         extends BaseTrackRecyclerViewAdapter<BaseTrackRecyclerViewAdapter.BaseViewHolder> {

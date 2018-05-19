@@ -3,9 +3,7 @@ package com.framgia.mysoundcloud.screen.search;
 import com.framgia.mysoundcloud.screen.BasePresenter;
 import com.framgia.mysoundcloud.screen.BaseView;
 
-/**
- * Created by sonng266 on 13/03/2018.
- */
+
 
 public interface SearchViewContract {
     /**

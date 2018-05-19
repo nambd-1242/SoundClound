@@ -17,9 +17,7 @@ import com.framgia.mysoundcloud.screen.main.MainViewConstract;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 15/03/2018.
- */
+
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHolder> {
 

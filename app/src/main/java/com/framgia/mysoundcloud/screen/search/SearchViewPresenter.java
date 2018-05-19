@@ -7,9 +7,7 @@ import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 13/03/2018.
- */
+
 
 public class SearchViewPresenter implements SearchViewContract.Presenter,
         TrackDataSource.OnFetchDataListener<Track> {

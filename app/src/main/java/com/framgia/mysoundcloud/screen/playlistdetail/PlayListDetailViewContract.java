@@ -4,9 +4,6 @@ import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.screen.BasePresenter;
 import com.framgia.mysoundcloud.screen.BaseView;
 
-/**
- * Created by sonng266 on 09/03/2018.
- */
 
 public interface PlayListDetailViewContract {
     /**

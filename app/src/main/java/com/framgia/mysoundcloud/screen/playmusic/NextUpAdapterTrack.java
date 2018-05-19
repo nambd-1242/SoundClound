@@ -10,9 +10,7 @@ import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.screen.BaseTrackRecyclerViewAdapter;
 import com.framgia.mysoundcloud.utils.StringUtil;
 
-/**
- * Created by sonng266 on 08/03/2018.
- */
+
 
 public class NextUpAdapterTrack extends
         BaseTrackRecyclerViewAdapter<BaseTrackRecyclerViewAdapter.BaseViewHolder> {

@@ -13,9 +13,7 @@ import com.framgia.mysoundcloud.utils.Constant;
 import java.util.List;
 
 
-/**
- * Created by sonng266 on 01/03/2018.
- */
+
 
 public abstract class BaseFragment extends Fragment {
 

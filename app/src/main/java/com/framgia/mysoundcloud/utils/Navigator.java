@@ -10,9 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.framgia.mysoundcloud.R;
 
-/**
- * Created by sonng266 on 25/02/2018.
- */
+
 
 public class Navigator {
 

@@ -4,9 +4,7 @@ import android.support.annotation.IntDef;
 
 import com.framgia.mysoundcloud.data.model.Track;
 
-/**
- * Created by sonng266 on 04/03/2018.
- */
+
 
 public abstract class PlaybackInfoListener {
 

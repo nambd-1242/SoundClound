@@ -10,9 +10,7 @@ import com.framgia.mysoundcloud.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 09/03/2018.
- */
+
 
 public class PlaylistDetailPresenter implements PlayListDetailViewContract.Presenter,
         TrackDataSource.OnFetchDataListener<Track> {

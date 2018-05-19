@@ -13,9 +13,7 @@ import com.framgia.mysoundcloud.data.model.Track;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 26/02/2018.
- */
+
 
 public abstract class BaseTrackRecyclerViewAdapter<V extends BaseTrackRecyclerViewAdapter.BaseViewHolder>
         extends RecyclerView.Adapter<V> {

@@ -14,9 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Signature;
 
-/**
- * Created by sonng266 on 12/03/2018.
- */
+
 
 public class MainApplication extends Application {
     @Override

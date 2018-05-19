@@ -1,8 +1,6 @@
 package com.framgia.mysoundcloud.screen.main;
 
-/**
- * Created by sonng266 on 26/02/2018.
- */
+
 
 public class MainViewPresenter implements MainViewConstract.Presenter {
 

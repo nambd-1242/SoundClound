@@ -10,10 +10,6 @@ import com.framgia.mysoundcloud.screen.playlist.PlaylistFragment;
 import com.framgia.mysoundcloud.screen.profile.ProfileFragment;
 import com.framgia.mysoundcloud.utils.Constant;
 
-/**
- * Created by sonng266 on 27/02/2018.
- */
-
 public class MusicGenresPagerAdapter extends FragmentPagerAdapter {
 
     public static final int TAB_NUMBER = 5;

@@ -4,9 +4,6 @@ import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import com.framgia.mysoundcloud.utils.StringUtil;
 
-/**
- * Created by sonng266 on 28/02/2018.
- */
 
 public class TrackRemoteDataSource implements TrackDataSource.RemoteDataSource {
 

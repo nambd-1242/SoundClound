@@ -19,9 +19,6 @@ import com.framgia.mysoundcloud.utils.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 02/03/2018.
- */
 
 public class MusicGenresAdapter extends BaseTrackRecyclerViewAdapter<BaseTrackRecyclerViewAdapter.BaseViewHolder>
         implements DownloadTrackManager.DownloadListener {

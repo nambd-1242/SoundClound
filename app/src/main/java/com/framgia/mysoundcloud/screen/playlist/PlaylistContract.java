@@ -5,9 +5,7 @@ import com.framgia.mysoundcloud.screen.BasePresenter;
 
 import java.util.List;
 
-/**
- * Created by sonng266 on 15/03/2018.
- */
+
 
 public interface PlaylistContract {
     /**

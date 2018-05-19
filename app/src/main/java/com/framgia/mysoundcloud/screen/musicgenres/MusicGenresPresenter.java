@@ -7,10 +7,6 @@ import com.framgia.mysoundcloud.data.source.TrackDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sonng266 on 27/02/2018.
- */
-
 public class MusicGenresPresenter implements MusicGenresContract.Presenter,
         TrackDataSource.OnFetchDataListener<Track> {
 

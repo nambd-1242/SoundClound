@@ -5,9 +5,7 @@ import android.os.Handler;
 import com.framgia.mysoundcloud.data.model.User;
 import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 
-/**
- * Created by sonng266 on 26/02/2018.
- */
+
 
 public class SplashPresenter implements SplashContract.Presenter {
 

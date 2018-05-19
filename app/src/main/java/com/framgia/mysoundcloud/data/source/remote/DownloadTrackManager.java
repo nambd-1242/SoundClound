@@ -8,9 +8,7 @@ import com.framgia.mysoundcloud.R;
 import com.framgia.mysoundcloud.data.model.Track;
 import com.framgia.mysoundcloud.utils.StringUtil;
 
-/**
- * Created by sonng266 on 07/03/2018.
- */
+
 
 public class DownloadTrackManager {
 

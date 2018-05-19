@@ -2,9 +2,7 @@ package com.framgia.mysoundcloud.utils;
 
 import android.Manifest;
 
-/**
- * Created by sonng266 on 28/02/2018.
- */
+
 
 public final class Constant {
 

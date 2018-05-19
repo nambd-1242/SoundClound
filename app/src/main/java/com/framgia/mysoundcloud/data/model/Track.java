@@ -6,9 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by sonng266 on 28/02/2018.
- */
+
 
 public class Track implements Parcelable {
     @SerializedName("artwork_url")

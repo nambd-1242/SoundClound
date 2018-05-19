@@ -4,9 +4,7 @@ import android.app.Activity;
 
 import com.framgia.mysoundcloud.data.model.Track;
 
-/**
- * Created by sonng266 on 25/02/2018.
- */
+
 
 public interface DialogManagerInterface {
 

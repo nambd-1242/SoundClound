@@ -10,9 +10,7 @@ import com.framgia.mysoundcloud.data.source.local.SharePreferences;
 
 import java.util.List;
 
-/**
- * Created by sonng266 on 15/03/2018.
- */
+
 
 public class ProfilePresenter implements ProfileContract.Presenter {
 

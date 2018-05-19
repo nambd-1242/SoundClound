@@ -3,9 +3,7 @@ package com.framgia.mysoundcloud.utils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * Created by sonng266 on 13/03/2018.
- */
+
 
 public class EndlessScrollListener extends RecyclerView.OnScrollListener {
     private boolean mLoading;
