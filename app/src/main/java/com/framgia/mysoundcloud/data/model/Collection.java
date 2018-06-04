@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class Collection {
     @SerializedName("track")
     @Expose
-    private Track mTrack;
+    private Track mTrack
     @SerializedName("score")
     @Expose
     private int mScore;
