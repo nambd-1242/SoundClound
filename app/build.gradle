@@ -10,6 +10,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_KEY", "\"${API_KEY}\""
+        lintOptions {
+            abortOnError false
+        }
+
     }
     buildTypes {
         release {
