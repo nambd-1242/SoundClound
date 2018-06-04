@@ -30,4 +30,8 @@ public class Collection {
     public void setScore(int score) {
         mScore = score;
     }
+
+    public Collection(Track mTrack) {
+        this.mTrack = mTrack;
+    }
 }
