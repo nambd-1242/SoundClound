@@ -3,9 +3,7 @@ package com.framgia.mysoundcloud.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Sony on 1/5/2018.
- */
+
 
 public class Collection {
     @SerializedName("track")
@@ -34,4 +32,5 @@ public class Collection {
     public Collection(Track mTrack) {
         this.mTrack = mTrack;
     }
+  final
 }
